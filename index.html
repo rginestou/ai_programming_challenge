@@ -12,8 +12,16 @@
 </head>
 
 <body>
-	Hello World!
+	<div>
+		<canvas id="terrain" width="1600" height="800" class="mainCanvas"></canvas>
+		<canvas id="obstacles" width="1600" height="800" class="overlayCanvas"></canvas>
+		<canvas id="players" width="1600" height="800" class="overlayCanvas"></canvas>
+	</div>
 
-	<script src="js/scripts.js"></script>
+	<script src="js/perlinnoise.js"></script>
+	<script src="js/mapgeneration.js"></script>
+	<script src="js/engine.js"></script>
+	<script src="js/display.js"></script>
+	<script src="js/game.js"></script>
 </body>
 </html>
