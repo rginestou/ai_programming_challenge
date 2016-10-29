@@ -5,6 +5,7 @@ All the generation algorithm are implemented here
 function generateMap( terrainMap, obstacleMap, mapSize ) {
 	var noiseGen = new ClassicalNoise()
 	var scale = 0.1
+	var boulderDensity = 0.01
 	var noise
 
 	// Basic landscape
@@ -18,6 +19,9 @@ function generateMap( terrainMap, obstacleMap, mapSize ) {
 				obstacleMap[i][j] = 1
 			} else {
 				obstacleMap[i][j] = 0
+			}
+			if (Math.random() < boulderDensity) {
+				obstacleMap[i][j] = 2
 			}
 		}
 	}

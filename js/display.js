@@ -6,7 +6,9 @@ Responsible for drawing on the client's window
 tileSize = { "x" : 64, "y" : 57, "dx" : 32, "dy" : 16 }
 var terrainTiles = new Image();
 terrainTiles.src = 'img/isometric_tile.png';
-terrainTiles.imageSmoothingEnabled = false
+
+var unitsSprite = new Image();
+unitsSprite.src = 'img/sword64.png';
 
 // Load the canvas
 var canvas = {
@@ -54,7 +56,7 @@ function display() {
 		f = (canvasWidth * 0.9) / (engine.mapSize * tileSize.x)
 	}
 
-	var type;
+	var type, obstacle, unit
 
 	// For each cell, draw the corresponding tile
 	for (var i = 0; i < engine.mapSize; i++) {
@@ -64,8 +66,13 @@ function display() {
 
 			obstacle = engine.obstacleMap[i][j]
 			if (obstacle) {
-
 				drawTile( ctx.obstacles, terrainTiles, f, 1, 2, obstacle - 1, 1, i, j )
+			}
+
+			unit = engine.unitsMap[i][j]
+			if (unit) {
+				// TODO
+				drawTile( ctx.players, unitsSprite, f, 1, 1, unit.type, 1, i, j )
 			}
 		}
 	}
