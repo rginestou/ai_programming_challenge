@@ -13,15 +13,19 @@ function generateMap( terrainMap, obstacleMap, mapSize ) {
 
 		for (var j = 0; j < mapSize; j++) {
 			noise = noiseGen.noise(i * scale, j * scale, 0)
-			terrainMap[i][j] = parseInt(noise * 2 + 2)
+			terrainMap[i][j] = parseInt(noise * 4 + 4)
 
 			if (noise > 0.3 && noise < 0.5) {
-				obstacleMap[i][j] = 1
+				obstacleMap[i][j] = 1 + Math.floor(Math.random() * 3)
+			} else if (noise > 0.60) {
+				obstacleMap[i][j] = 4
+			} else if (noise > 0.70) {
+				obstacleMap[i][j] = 5
 			} else {
 				obstacleMap[i][j] = 0
 			}
 			if (Math.random() < boulderDensity) {
-				obstacleMap[i][j] = 2
+				// obstacleMap[i][j] = 2
 			}
 		}
 	}
@@ -55,8 +59,8 @@ function generateMap( terrainMap, obstacleMap, mapSize ) {
 
 		px = Math.floor(P.x) ; py = Math.floor(P.y)
 		qx = Math.floor(Q.x) ; qy = Math.floor(Q.y)
-		terrainMap[px][py] = 4
-		terrainMap[qx][qy] = 4
+		terrainMap[px][py] = 7
+		terrainMap[qx][qy] = 7
 		obstacleMap[px][py] = 0
 		obstacleMap[qx][qy] = 0
 	}

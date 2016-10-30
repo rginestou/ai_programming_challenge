@@ -3,9 +3,13 @@ Responsible for drawing on the client's window
 */
 
 // Load the textures
-tileSize = { "x" : 64, "y" : 57, "dx" : 32, "dy" : 16 }
+tileSizeTerrain = { "x" : 64, "y" : 48, "dx" : 32, "dy" : 16 }
+tileSizeObstacles = { "x" : 64, "y" : 32, "dx" : 32, "dy" : 16 }
 var terrainTiles = new Image();
-terrainTiles.src = 'img/isometric_tile.png';
+terrainTiles.src = 'img/terrain_tiles.png';
+
+var obstaclesTiles = new Image();
+obstaclesTiles.src = 'img/obstacle_tiles.png';
 
 var unitsSprite = new Image();
 unitsSprite.src = 'img/sword64.png';
@@ -27,15 +31,20 @@ var ctx = {
 	"players" : canvas.players.getContext("2d")
 }
 
+// Good resizing
 ctx.terrain.mozImageSmoothingEnabled = false;
 ctx.terrain.webkitImageSmoothingEnabled = false;
 ctx.terrain.msImageSmoothingEnabled = false;
 ctx.terrain.imageSmoothingEnabled = false;
+ctx.obstacles.mozImageSmoothingEnabled = false;
+ctx.obstacles.webkitImageSmoothingEnabled = false;
+ctx.obstacles.msImageSmoothingEnabled = false;
+ctx.obstacles.imageSmoothingEnabled = false;
 
-var origin = { "x" : canvasWidth / 2 - tileSize.dx, "y" : tileSize.dy }
+var origin = { "x" : canvasWidth / 2 - tileSizeTerrain.dx, "y" : tileSizeTerrain.dy }
 
 // Draw a specific tile to the context
-function drawTile( context, sprite, f, tsx, tsy, tx, ty, wx, wy ) {
+function drawTile( context, sprite, tileSize, f, tsx, tsy, tx, ty, wx, wy ) {
 	// Isometric transformation
 	context.drawImage(
 		sprite,
@@ -51,9 +60,9 @@ function display() {
 	// Draw the map
 	var f = 1
 
-	if (engine.mapSize * tileSize.x > canvasWidth * 0.9) {
+	if (engine.mapSize * tileSizeTerrain.x > canvasWidth * 0.9) {
 		// Need to be zoomed out
-		f = (canvasWidth * 0.9) / (engine.mapSize * tileSize.x)
+		f = (canvasWidth * 0.9) / (engine.mapSize * tileSizeTerrain.x)
 	}
 
 	var type, obstacle, unit
@@ -62,17 +71,17 @@ function display() {
 	for (var i = 0; i < engine.mapSize; i++) {
 		for (var j = 0; j < engine.mapSize; j++) {
 			type = engine.terrainMap[i][j]
-			drawTile( ctx.terrain, terrainTiles, f, 1, 1, type, 0, i, j )
+			drawTile( ctx.terrain, terrainTiles, tileSizeTerrain, f, 1, 1, type, 0, i, j )
 
 			obstacle = engine.obstacleMap[i][j]
 			if (obstacle) {
-				drawTile( ctx.obstacles, terrainTiles, f, 1, 2, obstacle - 1, 1, i, j )
+				drawTile( ctx.obstacles, obstaclesTiles, tileSizeObstacles, f, 1, 3, obstacle - 1, 0, i, j )
 			}
 
 			unit = engine.unitsMap[i][j]
 			if (unit) {
 				// TODO
-				drawTile( ctx.players, unitsSprite, f, 1, 1, unit.type, 1, i, j )
+				drawTile( ctx.players, unitsSprite, tileSizeObstacles, f, 1, 1, unit.type, 1, i, j )
 			}
 		}
 	}
