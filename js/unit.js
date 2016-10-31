@@ -10,3 +10,10 @@ var Unit = function ( type, side, position, dir ) {
 	this.action = 0
 	this.key = 0
 }
+
+var Building = function ( id, side, position, size ) {
+	this.id = id
+	this.size = size
+	this.side = side
+	this.position = position
+}

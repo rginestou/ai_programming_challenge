@@ -2,7 +2,7 @@
 All the generation algorithm are implemented here
 */
 
-function generateMap( terrainMap, obstacleMap, mapSize ) {
+function generateMap( terrainMap, obstacleMap, unitMap, buildingMap, mapSize ) {
 	var noiseGen = new ClassicalNoise()
 	var scale = 0.1
 	var boulderDensity = 0.01
@@ -13,16 +13,18 @@ function generateMap( terrainMap, obstacleMap, mapSize ) {
 
 		for (var j = 0; j < mapSize; j++) {
 			noise = noiseGen.noise(i * scale, j * scale, 0)
-			terrainMap[i][j] = parseInt(noise * 4 + 4)
+			terrainMap[i][j] = parseInt(noise * 6 + 6)
+			unitMap[i][j] = undefined
+			buildingMap[i][j] = undefined
 
 			if (noise > 0.3 && noise < 0.5) {
-				obstacleMap[i][j] = 1 + Math.floor(Math.random() * 3)
+				obstacleMap[i][j] = Math.floor(Math.random() * 3)
 			} else if (noise > 0.60) {
-				obstacleMap[i][j] = 4
+				obstacleMap[i][j] = 3
 			} else if (noise > 0.70) {
-				obstacleMap[i][j] = 5
+				obstacleMap[i][j] = 4
 			} else {
-				obstacleMap[i][j] = 0
+				obstacleMap[i][j] = -1
 			}
 			if (Math.random() < boulderDensity) {
 				// obstacleMap[i][j] = 2
@@ -59,8 +61,8 @@ function generateMap( terrainMap, obstacleMap, mapSize ) {
 
 		px = Math.floor(P.x) ; py = Math.floor(P.y)
 		qx = Math.floor(Q.x) ; qy = Math.floor(Q.y)
-		terrainMap[px][py] = 7
-		terrainMap[qx][qy] = 7
+		terrainMap[px][py] = 11
+		terrainMap[qx][qy] = 11
 		obstacleMap[px][py] = 0
 		obstacleMap[qx][qy] = 0
 	}
