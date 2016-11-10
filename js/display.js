@@ -3,8 +3,8 @@ Responsible for drawing on the client's window
 */
 
 // Load the textures
-tileSizeTerrain = { "x" : 64, "y" : 48, "dx" : 32, "dy" : 16 }
-tileSizeObstacles = { "x" : 64, "y" : 32, "dx" : 32, "dy" : 16 }
+var tileSizeTerrain = { "x" : 64, "y" : 48, "dx" : 32, "dy" : 16 }
+var tileSizeObstacles = { "x" : 64, "y" : 32, "dx" : 32, "dy" : 16 }
 var terrainTiles = new Image()
 terrainTiles.src = 'img/terrain_tiles.png'
 
@@ -48,15 +48,14 @@ function drawTile( sprite, tileSize, f, tsx, tsy, tx, ty, wx, wy ) {
 	);
 }
 
+// Determine the factor
+var f = 1
+
+if (engine.mapSize * tileSizeTerrain.x > canvasWidth * 0.9) {
+	f = (canvasWidth * 0.9) / (engine.mapSize * tileSizeTerrain.x)
+}
+
 function display() {
-	// Draw the map
-	var f = 1
-
-	if (engine.mapSize * tileSizeTerrain.x > canvasWidth * 0.9) {
-		// Need to be zoomed out
-		f = (canvasWidth * 0.9) / (engine.mapSize * tileSizeTerrain.x)
-	}
-
 	var type, obstacle, unit
 	var k, i, j, m, M
 
@@ -91,9 +90,11 @@ function display() {
 			building = engine.buildingMap[i][j]
 
 			if (building) {
+				offset = (building.size - 1) * 0.5
 				drawTile( buildingSprite, tileSizeObstacles, f,
-					building.size, 1+building.size, building.id, 2-building.size,
-					i-0.5, j+0.5 )
+					building.size, 3,
+					(building.id % 8) * building.size, 3 * Math.floor(building.id / 8),
+					i-offset, j+offset )
 			}
 		}
 	}

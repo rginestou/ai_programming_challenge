@@ -16,7 +16,7 @@ function isWaterNearby( map, i, j, mapSize, sandId ) {
 	return false
 }
 
-function generateMap( terrainMap, obstacleMap, unitMap, buildingMap, mapSize ) {
+function generateMap( terrainMap, obstacleMap, unitMap, buildingMap, mapSize, fountainRadius ) {
 	// Constants for terrain generation
 	baseZoomLevel = 80.0
 	detailZoomLevel = 60.0
@@ -127,4 +127,26 @@ function generateMap( terrainMap, obstacleMap, unitMap, buildingMap, mapSize ) {
 		obstacleMap[px][py] = 0
 		obstacleMap[qx][qy] = 0
 	}
+
+	// The fountains
+	function addFountain(x, y) {
+		buildingMap[x][y] = new Building( 0, 0, { "x" : x, "y" : y}, 1 )
+
+		for (var i = -fountainRadius; i <= fountainRadius; i++) {
+
+			for (var j = -fountainRadius; j <= fountainRadius; j++) {
+
+				if ( i*i + j*j <= fountainRadius * fountainRadius ) {
+					terrainMap[x + i][y + j] = 16
+				}
+			}
+		}
+	}
+
+	var off = Math.max(Math.floor(mapSize / 6), fountainRadius)
+	addFountain(off,off)
+	addFountain(off,mapSize - off - 1)
+	addFountain(mapSize - off - 1, off)
+	addFountain(mapSize - off - 1, mapSize - off - 1)
+	addFountain(Math.floor(mapSize / 2), Math.floor(mapSize / 2))
 }

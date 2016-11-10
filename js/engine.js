@@ -4,7 +4,7 @@ The Engine handles the game rules and update its state
 
 function Engine( gameConstants ) {
 	// Initialize the map
-	this.mapSize = gameConstants["map_size"]
+	this.mapSize = Math.floor(gameConstants["map_size"] / 2.0) * 2 + 1
 
 	this.terrainMap = []
 	this.obstacleMap = []
@@ -24,10 +24,15 @@ function Engine( gameConstants ) {
 					this.obstacleMap,
 					this.unitMap,
 					this.buildingMap,
-					this.mapSize )
+					this.mapSize,
+					gameConstants["fountain_radius"] )
 
-	// console.log(this.addBuilding( 1, 1, 0, 0 ))
+	console.log(this.addBuilding( 1, 1, 9, 0 ))
+	console.log(this.addBuilding( 10, 10, 8, 0 ))
 }
+
+// Get the input, check the rules and list the changes to be handled
+Engine.prototype.
 
 // Add a building to the map if possible
 Engine.prototype.addBuilding = function ( x, y, id, side ) {
@@ -37,14 +42,14 @@ Engine.prototype.addBuilding = function ( x, y, id, side ) {
 	// Test if possible
 	if ( id < 8 ) {
 		// 2x2 square
-		size = 2
+		size = 1
 
 		if ( !this.isNothing(x, y, 2, this.mapSize) ) {
 			return false
 		}
 	} else if ( id < 16 ) {
 		// 1x1 square
-		size = 1
+		size = 2
 
 		if ( !this.isNothing(x, y, 1, this.mapSize) ) {
 			return false

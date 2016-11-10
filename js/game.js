@@ -2,7 +2,9 @@
 The main loop of the game, calls for updates
 */
 
-gameConstants = { "map_size" : 50 }
+gameConstants = { "map_size" : 37,
+ 					"fountain_radius" : 2
+}
 
 var engine = new Engine( gameConstants )
 
