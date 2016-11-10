@@ -26,50 +26,56 @@ function Engine( gameConstants ) {
 					this.buildingMap,
 					this.mapSize )
 
-	console.log(this.addBuilding( 10, 5, 0, 0 ))
+	// console.log(this.addBuilding( 1, 1, 0, 0 ))
 }
 
 // Add a building to the map if possible
 Engine.prototype.addBuilding = function ( x, y, id, side ) {
 	var size;
 
+	// TODO
 	// Test if possible
 	if ( id < 8 ) {
 		// 2x2 square
 		size = 2
 
-		if ( !this.isNothing(x, y, 2) ) {
+		if ( !this.isNothing(x, y, 2, this.mapSize) ) {
 			return false
 		}
 	} else if ( id < 16 ) {
 		// 1x1 square
 		size = 1
 
-		if ( !this.isNothing(x, y, 1) ) {
+		if ( !this.isNothing(x, y, 1, this.mapSize) ) {
 			return false
 		}
 	}
 
 	// Footprint of  the building
-	for (var i = x; i < x + size; i++) {
+	for (var i = x - size + 1; i <= x; i++) {
 
-		for (var j = y; j < y + size; j++) {
+		for (var j = y - size + 1; j <= y; j++) {
 			this.buildingMap[i][j] = 0
 		}
 	}
 
-	// Mark the upper corner
+	// Mark the lower corner
 	this.buildingMap[x][y] = new Building( id, side, { "x" : x, "y" : y}, size )
 
 	return true
 }
 
 // Test if one can place something at a given coordinate
-Engine.prototype.isNothing = function ( x, y, size ) {
-	// Takes the upper square as origin
-	for (var i = x; i < x + size; i++) {
+Engine.prototype.isNothing = function ( x, y, size, mapSize ) {
+	// Verify if possible
+	if ( x - size + 1 < 0 || y - size + 1 < 0 || x > mapSize || y > mapSize ) {
+		return false
+	}
 
-		for (var j = y; j < y + size; j++) {
+	// Takes the lower square as origin
+	for (var i = x - size + 1; i <= x; i++) {
+
+		for (var j = y - size + 1; j <= y; j++) {
 
 			// Nothing on this cell ?
 			if ( this.obstacleMap[i][j] > 0 ||
