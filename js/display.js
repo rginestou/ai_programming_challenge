@@ -20,8 +20,8 @@ buildingSprite.src = 'img/buildings.png'
 // Load the canvas
 var canvas = document.getElementById("map")
 
-var canvasWidth = canvas.width
-	canvasHeight = canvas.height
+canvas.width = document.body.clientWidth
+canvas.height = document.body.clientHeight
 
 // Load the contexts
 var ctx = canvas.getContext("2d")
@@ -33,7 +33,7 @@ ctx.webkitImageSmoothingEnabled = false;
 ctx.msImageSmoothingEnabled = false;
 ctx.imageSmoothingEnabled = false;
 
-var origin = { "x" : canvasWidth / 2 - tileSizeTerrain.dx, "y" : tileSizeTerrain.dy }
+var origin = { "x" : canvas.width / 2 - tileSizeTerrain.dx, "y" : tileSizeTerrain.dy }
 
 // Draw a specific tile to the context
 function drawTile( sprite, tileSize, f, tsx, tsy, tx, ty, wx, wy ) {
@@ -48,16 +48,16 @@ function drawTile( sprite, tileSize, f, tsx, tsy, tx, ty, wx, wy ) {
 	);
 }
 
-// Determine the factor
-var f = 1
-
-if (engine.mapSize * tileSizeTerrain.x > canvasWidth * 0.9) {
-	f = (canvasWidth * 0.9) / (engine.mapSize * tileSizeTerrain.x)
-}
-
 function display() {
 	var type, obstacle, unit
 	var k, i, j, m, M
+
+	// Determine the factor
+	var f = 1
+
+	if (engine.mapSize * tileSizeTerrain.x > canvas.width * 0.9) {
+		f = (canvas.width * 0.9) / (engine.mapSize * tileSizeTerrain.x)
+	}
 
 	// For each cell, draw the corresponding tile
 	// Loop from rear to close
@@ -67,6 +67,8 @@ function display() {
 
 		for (j = M; j <= m; j++) {
 			i = m + M - j
+
+			// lastChanges
 
 			type = engine.terrainMap[i][j]
 			drawTile( terrainTiles, tileSizeTerrain, f,
@@ -82,7 +84,6 @@ function display() {
 			unit = engine.unitMap[i][j]
 
 			if (unit) {
-				// TODO
 				drawTile( unitsSprite, tileSizeObstacles, f,
 					1, 1, unit.type, 1, i, j )
 			}

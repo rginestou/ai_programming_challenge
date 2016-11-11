@@ -56,20 +56,10 @@ function generateMap( terrainMap, obstacleMap, unitMap, buildingMap, mapSize, fo
 			terrainMap[i][j] = noise
 			unitMap[i][j] = undefined
 			buildingMap[i][j] = undefined
-		}
-	}
 
-	// Detail landscape modification
-	for ( var i = 0 ; i < mapSize ; i++) {
-		for (var j = 0; j < mapSize; j++) {
 			noise = Math.floor(detailNoiseGen.in2D(i / detailZoomLevel, j / detailZoomLevel))
 			terrainMap[i][j] += noise
-		}
-	}
 
-	// Trees landscape
-	for ( var i = 0 ; i < mapSize ; i++) {
-		for (var j = 0; j < mapSize; j++) {
 			noise = rainNoiseGen.in2D(i / rainZoomLevel, j / rainZoomLevel)
 
 			// Specific range of tiles
@@ -138,6 +128,7 @@ function generateMap( terrainMap, obstacleMap, unitMap, buildingMap, mapSize, fo
 
 				if ( i*i + j*j <= fountainRadius * fountainRadius ) {
 					terrainMap[x + i][y + j] = 16
+					obstacleMap[x + i][y + j] = undefined
 				}
 			}
 		}

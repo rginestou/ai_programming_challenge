@@ -27,12 +27,16 @@ function Engine( gameConstants ) {
 					this.mapSize,
 					gameConstants["fountain_radius"] )
 
-	console.log(this.addBuilding( 1, 1, 9, 0 ))
-	console.log(this.addBuilding( 10, 10, 8, 0 ))
+	this.addBuilding( 1, 1, 9, 0 )
+	this.addBuilding( 10, 10, 8, 0 )
 }
 
 // Get the input, check the rules and list the changes to be handled
-Engine.prototype.
+Engine.prototype.update = function ( ) {
+	// TODO
+	// Get the inputs
+	// Check against the rules
+}
 
 // Add a building to the map if possible
 Engine.prototype.addBuilding = function ( x, y, id, side ) {
