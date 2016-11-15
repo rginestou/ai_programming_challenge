@@ -3,8 +3,8 @@ Responsible for drawing on the client's window
 */
 
 // Load the textures
-tileSizeTerrain = { "x" : 64, "y" : 48, "dx" : 32, "dy" : 16 }
-tileSizeObstacles = { "x" : 64, "y" : 32, "dx" : 32, "dy" : 16 }
+var tileSizeTerrain = { "x" : 64, "y" : 48, "dx" : 32, "dy" : 16 }
+var tileSizeObstacles = { "x" : 64, "y" : 32, "dx" : 32, "dy" : 16 }
 var terrainTiles = new Image()
 terrainTiles.src = 'img/terrain_tiles.png'
 
@@ -18,38 +18,27 @@ var buildingSprite = new Image()
 buildingSprite.src = 'img/buildings.png'
 
 // Load the canvas
-var canvas = {
-	"terrain" : document.getElementById("terrain"),
-	"obstacles" : document.getElementById("obstacles"),
-	"players" : document.getElementById("players")
-}
+var canvas = document.getElementById("map")
 
-var canvasWidth = canvas.terrain.width
-	canvasHeight = canvas.terrain.height
+canvas.width = document.body.clientWidth
+canvas.height = document.body.clientHeight
 
 // Load the contexts
-var ctx = {
-	"terrain" : canvas.terrain.getContext("2d"),
-	"obstacles" : canvas.obstacles.getContext("2d"),
-	"players" : canvas.players.getContext("2d")
-}
+var ctx = canvas.getContext("2d")
 
-// Good resizing
-ctx.terrain.mozImageSmoothingEnabled = false;
-ctx.terrain.webkitImageSmoothingEnabled = false;
-ctx.terrain.msImageSmoothingEnabled = false;
-ctx.terrain.imageSmoothingEnabled = false;
-ctx.obstacles.mozImageSmoothingEnabled = false;
-ctx.obstacles.webkitImageSmoothingEnabled = false;
-ctx.obstacles.msImageSmoothingEnabled = false;
-ctx.obstacles.imageSmoothingEnabled = false;
+// Extra operation
+canvas.globalCompositeOperation = "lighter";
+ctx.mozImageSmoothingEnabled = false;
+ctx.webkitImageSmoothingEnabled = false;
+ctx.msImageSmoothingEnabled = false;
+ctx.imageSmoothingEnabled = false;
 
-var origin = { "x" : canvasWidth / 2 - tileSizeTerrain.dx, "y" : tileSizeTerrain.dy }
+var origin = { "x" : canvas.width / 2 - tileSizeTerrain.dx, "y" : tileSizeTerrain.dy }
 
 // Draw a specific tile to the context
-function drawTile( context, sprite, tileSize, f, tsx, tsy, tx, ty, wx, wy ) {
+function drawTile( sprite, tileSize, f, tsx, tsy, tx, ty, wx, wy ) {
 	// Isometric transformation
-	context.drawImage(
+	ctx.drawImage(
 		sprite,
 		Math.floor(tx * tileSize.x), Math.floor(ty * tileSize.y),
 		tileSize.x * tsx, tileSize.y * tsy,
@@ -60,45 +49,53 @@ function drawTile( context, sprite, tileSize, f, tsx, tsy, tx, ty, wx, wy ) {
 }
 
 function display() {
-	// Draw the map
+	var type, obstacle, unit
+	var k, i, j, m, M
+
+	// Determine the factor
 	var f = 1
 
-	if (engine.mapSize * tileSizeTerrain.x > canvasWidth * 0.9) {
-		// Need to be zoomed out
-		f = (canvasWidth * 0.9) / (engine.mapSize * tileSizeTerrain.x)
+	if (engine.mapSize * tileSizeTerrain.x > canvas.width * 0.9) {
+		f = (canvas.width * 0.9) / (engine.mapSize * tileSizeTerrain.x)
 	}
 
-	var type, obstacle, unit
-
 	// For each cell, draw the corresponding tile
-	for (var i = 0; i < engine.mapSize; i++) {
+	// Loop from rear to close
+	for (k = 0; k <= 2 * engine.mapSize - 2; k++) { //
+		m = Math.min(k, engine.mapSize - 1)
+		M = Math.max(0, k - engine.mapSize + 1)
 
-		for (var j = 0; j < engine.mapSize; j++) {
+		for (j = M; j <= m; j++) {
+			i = m + M - j
+
+			// lastChanges
+
 			type = engine.terrainMap[i][j]
-			drawTile( ctx.terrain, terrainTiles, tileSizeTerrain, f,
+			drawTile( terrainTiles, tileSizeTerrain, f,
 				1, 1, type, 0, i, j )
 
 			obstacle = engine.obstacleMap[i][j]
 
 			if (obstacle) {
-				drawTile( ctx.obstacles, obstaclesTiles, tileSizeObstacles, f,
-					1, 3, obstacle, 0, i, j )
+				drawTile( obstaclesTiles, tileSizeObstacles, f,
+					1, 3, obstacle - 1, 0, i, j )
 			}
 
 			unit = engine.unitMap[i][j]
 
 			if (unit) {
-				// TODO
-				drawTile( ctx.players, unitsSprite, tileSizeObstacles, f,
+				drawTile( unitsSprite, tileSizeObstacles, f,
 					1, 1, unit.type, 1, i, j )
 			}
 
 			building = engine.buildingMap[i][j]
 
 			if (building) {
-				drawTile( ctx.players, buildingSprite, tileSizeObstacles, f,
-					building.size, 1+building.size, building.id, 2-building.size,
-					i+0.5, j+1.5 )
+				offset = (building.size - 1) * 0.5
+				drawTile( buildingSprite, tileSizeObstacles, f,
+					building.size, 3,
+					(building.id % 8) * building.size, 3 * Math.floor(building.id / 8),
+					i-offset, j+offset )
 			}
 		}
 	}

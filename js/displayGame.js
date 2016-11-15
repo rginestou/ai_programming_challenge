@@ -41,6 +41,8 @@ function displayGame () {
         obstacle.z += 1e3
         Graphics.add(obstacle)
       }
+
+      // TODO: Units & Buildings
     }
   }
 }

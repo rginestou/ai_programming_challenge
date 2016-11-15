@@ -5,7 +5,7 @@
 		<title>AI Programming Challenge</title>
 		<meta name="description" content="AI Challenge">
 		<meta name="author" content="DaTA">
-		<!-- <link rel="stylesheet" href="css/styles.css?v=1.0"> -->
+		<link rel="stylesheet" href="css/styles.css?v=1.0">
 	</head>
 
 	<style>
@@ -23,10 +23,12 @@
 	<body>
 		<div>
 			<canvas id="screen" width="1200" height="800"></canvas>
+			<!-- <canvas id="screen" class="mainCanvas"></canvas> -->
 		</div>
 	</body>
 
 	<script src="js/perlinnoise.js"></script>
+	<script src="js/simplexnoise.js"></script>
 	<script src="js/mapgeneration.js"></script>
 	<script src="js/unit.js"></script>
 	<script src="js/engine.js"></script>
@@ -36,7 +38,12 @@
 	<!-- <script src="js/game.js"></script> -->
 
 	<script>
-		const engine = new Engine({ map_size: 20 })
+		// Start game
+		const engine = new Engine({
+			map_size: 20,
+			fountain_radius: 2
+		})
+		// Show graphics
 		Graphics.setup('screen')
 		displayGame()
 	</script>
