@@ -7,28 +7,26 @@ function Engine (gameConstants) {
   this.mapSize = Math.floor(gameConstants['map_size'] / 2.0) * 2 + 1
 
   this.terrainMap = []
-  this.obstacleMap = []
-  this.unitMap = []
-  this.buildingMap = []
+  // this.obstacleMap = []
+  // this.unitMap = []
+  // this.buildingMap = []
+
+  this.gameObjects = []
 
   // Default values
   for (let i = 0; i < this.mapSize; i++) {
     this.terrainMap[i] = new Array(this.mapSize)
-    this.obstacleMap[i] = new Array(this.mapSize)
-    this.unitMap[i] = new Array(this.mapSize)
-    this.buildingMap[i] = new Array(this.mapSize)
+    // this.obstacleMap[i] = new Array(this.mapSize)
+    // this.unitMap[i] = new Array(this.mapSize)
+    // this.buildingMap[i] = new Array(this.mapSize)
   }
 
   // Generate the terrain and what is on it
   /* global generateMap */
-  generateMap(
-    this.terrainMap, this.obstacleMap, this.unitMap, this.buildingMap,
-    this.mapSize,
-    gameConstants['fountain_radius']
-  )
+  generateMap(this.terrainMap, this.gameObjects, gameConstants)
 
-  this.addBuilding(1, 1, 9, 0)
-  this.addBuilding(10, 10, 8, 0)
+  // this.addBuilding(1, 1, 9, 0)
+  // this.addBuilding(10, 10, 8, 0)
 }
 
 // Get the input, check the rules and list the changes to be handled

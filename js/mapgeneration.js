@@ -16,15 +16,31 @@ function isWaterNearby (map, i, j, mapSize, sandId) {
   return false
 }
 
-function generateMap (terrainMap, obstacleMap, unitMap, buildingMap, mapSize, fountainRadius) {
+/* global Obstacle, Building */
+
+// function generateMap (terrainMap, obstacleMap, unitMap, buildingMap, mapSize, fountainRadius) {
+function generateMap (terrainMap, gameObjects, gameConstants) {
+  const mapSize = gameConstants['map_size']
+  const fountainRadius = gameConstants['fountain_radius']
   // Constants for terrain generation
-  let baseZoomLevel = 80.0
-  let detailZoomLevel = 60.0
-  let rainZoomLevel = 10.0
-  let detailWeight = 0.15
-  let treeRainLevel = 0.35
-  let tilesSpectrum = 16
-  let sandId = 5
+  const baseZoomLevel = 80.0
+  const detailZoomLevel = 60.0
+  const rainZoomLevel = 10.0
+  const detailWeight = 0.15
+  const treeRainLevel = 0.35
+  const tilesSpectrum = 16
+  const sandId = 5
+
+  function getObjectAt (x, y) {
+    return gameObjects.find(o => (o.x === x && o.y === y))
+  }
+
+  function deleteObjectAt (x, y) {
+    let gameObject = getObjectAt(x, y)
+    if (gameObject) {
+      gameObjects.splice(gameObjects.indexOf(gameObject), 1)
+    }
+  }
 
   /* global FastSimplexNoise */
   const baseNoiseGen = new FastSimplexNoise({
@@ -55,8 +71,8 @@ function generateMap (terrainMap, obstacleMap, unitMap, buildingMap, mapSize, fo
     for (let j = 0; j < mapSize; j++) {
       noise = Math.floor(baseNoiseGen.in2D(i / baseZoomLevel, j / baseZoomLevel))
       terrainMap[i][j] = noise
-      unitMap[i][j] = undefined
-      buildingMap[i][j] = undefined
+      // unitMap[i][j] = undefined
+      // buildingMap[i][j] = undefined
 
       noise = Math.floor(detailNoiseGen.in2D(i / detailZoomLevel, j / detailZoomLevel))
       terrainMap[i][j] += noise
@@ -65,21 +81,21 @@ function generateMap (terrainMap, obstacleMap, unitMap, buildingMap, mapSize, fo
 
       // Specific range of tiles
       if (terrainMap[i][j] < 14 && terrainMap[i][j] > 8 && noise > treeRainLevel) {
-        obstacleMap[i][j] = 2
+        gameObjects.push(new Obstacle(2, i, j))
       }
     }
   }
 
   // Refinements
+  let gameObject
   for (let i = 0; i < mapSize; i++) {
     for (let j = 0; j < mapSize; j++) {
       if (terrainMap[i][j] >= sandId && isWaterNearby(terrainMap, i, j, mapSize, sandId)) {
         terrainMap[i][j] = sandId
       }
 
-      // Specific range of tiles
-      if (obstacleMap[i][j] === 2) {
-        obstacleMap[i][j] = 1 + Math.floor(Math.random() * 3)
+      if ((gameObject = getObjectAt(i, j))) {
+        gameObject.id = 1 + Math.floor(Math.random() * 3)
       }
     }
   }
@@ -120,23 +136,22 @@ function generateMap (terrainMap, obstacleMap, unitMap, buildingMap, mapSize, fo
 
     terrainMap[px][py] = 15
     terrainMap[qx][qy] = 15
-    obstacleMap[px][py] = 0
-    obstacleMap[qx][qy] = 0
+    deleteObjectAt(px, py)
+    deleteObjectAt(qx, qy)
   }
 
   // The fountains
   function addFountain (x, y) {
-    /* global Building */
-    buildingMap[x][y] = new Building(0, 0, { x, y }, 1)
-
     for (let i = -fountainRadius; i <= fountainRadius; i++) {
       for (let j = -fountainRadius; j <= fountainRadius; j++) {
         if (i * i + j * j <= fountainRadius * fountainRadius) {
           terrainMap[x + i][y + j] = 16
-          obstacleMap[x + i][y + j] = undefined
+          deleteObjectAt(x + i, y + j)
         }
       }
     }
+
+    gameObjects.push(new Building(1, x, y))
   }
 
   const off = Math.max(Math.floor(mapSize / 6), fountainRadius)
