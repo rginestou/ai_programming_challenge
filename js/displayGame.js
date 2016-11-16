@@ -1,7 +1,8 @@
 /* global Graphics, Sprite, engine */
 
 const isometricTiles = { dx: 64, dy: 32, dz: 16 }
-const obstacleHeight = 96
+const tileW = isometricTiles.dx
+const tileH = isometricTiles.dy + isometricTiles.dz
 
 function isometricPos (wx, wy) {
   return [
@@ -21,28 +22,20 @@ function displayGame () {
     Graphics.scale = (Graphics.width * 0.9) / (engine.mapSize * isometricTiles.dx)
   }
 
-  let tileW = isometricTiles.dx
-  let tileH = isometricTiles.dy + isometricTiles.dz
+  // Render terrain
   for (let wx = 0; wx < engine.mapSize; wx++) {
     for (let wy = 0; wy < engine.mapSize; wy++) {
-      // Terrain
       let terrainType = engine.terrainMap[wx][wy]
       let tile = new Sprite('terrain_tiles.png', terrainType * tileW, 0, tileW, tileH)
       tile.setPosition(...isometricPos(wx, wy))
       tile.setOrigin(isometricTiles.dx / 2, isometricTiles.dy)
       Graphics.add(tile)
-
-      // Obstacles
-      let obstacleType = engine.obstacleMap[wx][wy]
-      if (obstacleType) {
-        let obstacle = new Sprite('obstacle_tiles.png', obstacleType * tileW, 0, tileW, obstacleHeight)
-        obstacle.setPosition(...isometricPos(wx, wy))
-        obstacle.setOrigin(isometricTiles.dx / 2, obstacleHeight)
-        obstacle.z += 1e3
-        Graphics.add(obstacle)
-      }
-
-      // TODO: Units & Buildings
     }
+  }
+
+  // Render objects
+  for (let gameObject of engine.gameObjects) {
+    gameObject.setupSprite()
+    Graphics.add(gameObject.sprite)
   }
 }
