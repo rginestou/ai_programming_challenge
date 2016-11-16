@@ -22,8 +22,8 @@
 
 	<body>
 		<div>
-			<canvas id="screen" width="1200" height="800"></canvas>
-			<!-- <canvas id="screen" class="mainCanvas"></canvas> -->
+			<!--TODO : Dynamic scaling, depending on the the page's layout-->
+			<canvas id="screen" width="1600" height="800"></canvas>
 		</div>
 	</body>
 
@@ -34,13 +34,11 @@
 	<script src="js/engine.js"></script>
 	<script src="js/graphics.js"></script>
 	<script src="js/displayGame.js"></script>
-	<!-- <script src="js/display.js"></script> -->
-	<!-- <script src="js/game.js"></script> -->
 
 	<script>
 		// Start game
 		const engine = new Engine({
-			map_size: 20,
+			map_size: 50,
 			fountain_radius: 2
 		})
 		// Show graphics

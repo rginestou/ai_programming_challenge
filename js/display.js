@@ -12,7 +12,7 @@ var obstaclesTiles = new Image()
 obstaclesTiles.src = 'img/obstacle_tiles.png'
 
 var unitsSprite = new Image()
-unitsSprite.src = 'img/sword64.png'
+unitsSprite.src = 'img/archer.png'
 
 var buildingSprite = new Image()
 buildingSprite.src = 'img/buildings.png'
@@ -99,4 +99,6 @@ function display() {
 			}
 		}
 	}
+	drawTile( unitsSprite, tileSizeObstacles, f,
+		1, 3, 0, 0, 5, 13 )
 }
