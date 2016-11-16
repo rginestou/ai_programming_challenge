@@ -15,3 +15,6 @@ io.on('connection', function (socket) {
 
 app.use(express.static('public'))
 server.listen(config.port, () => console.log('App running on port ' + config.port))
+
+const Engine = require('./game/engine')
+Engine.startGame('dumb', 'dumb')
