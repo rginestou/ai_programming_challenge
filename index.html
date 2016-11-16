@@ -1,27 +1,50 @@
 <!doctype html>
-
 <html lang="en">
-<head>
-	<meta charset="utf-8">
+	<head>
+		<meta charset="utf-8">
+		<title>AI Programming Challenge</title>
+		<meta name="description" content="AI Challenge">
+		<meta name="author" content="DaTA">
+		<link rel="stylesheet" href="css/styles.css?v=1.0">
+	</head>
 
-	<title>AI Programming Challenge</title>
-	<meta name="description" content="AI Challenge">
-	<meta name="author" content="DaTA">
+	<style>
+		body {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 100vh;
+			margin: 0;
+		}
 
-	<link rel="stylesheet" href="css/styles.css?v=1.0">
-</head>
+		canvas { background: #eee; }
+	</style>
 
-<body>
-	<div>
-		<canvas id="map" class="mainCanvas"></canvas>
-	</div>
+	<body>
+		<div>
+			<canvas id="screen" width="1200" height="800"></canvas>
+			<!-- <canvas id="screen" class="mainCanvas"></canvas> -->
+		</div>
+	</body>
 
 	<script src="js/perlinnoise.js"></script>
 	<script src="js/simplexnoise.js"></script>
 	<script src="js/mapgeneration.js"></script>
 	<script src="js/unit.js"></script>
 	<script src="js/engine.js"></script>
-	<script src="js/display.js"></script>
-	<script src="js/game.js"></script>
-</body>
+	<script src="js/graphics.js"></script>
+	<script src="js/displayGame.js"></script>
+	<!-- <script src="js/display.js"></script> -->
+	<!-- <script src="js/game.js"></script> -->
+
+	<script>
+		// Start game
+		const engine = new Engine({
+			map_size: 20,
+			fountain_radius: 2
+		})
+		// Show graphics
+		Graphics.setup('screen')
+		displayGame()
+	</script>
 </html>
