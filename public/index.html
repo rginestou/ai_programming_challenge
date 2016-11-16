@@ -27,6 +27,15 @@
 		</div>
 	</body>
 
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+	  var socket = io.connect();
+	  socket.on('news', function (data) {
+	    console.log(data);
+	    socket.emit('my other event', { my: 'data' });
+	  });
+	</script>
+
 	<script src="js/perlinnoise.js"></script>
 	<script src="js/simplexnoise.js"></script>
 	<script src="js/mapgeneration.js"></script>
