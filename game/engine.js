@@ -22,7 +22,7 @@ function startGame (...botNames) {
   }
 
   // Game ended
-  console.log('Winner is: ' + game.winner)
+  console.log('Winner is: ' + botNames[game.winner] + ' (' + game.winner + ')')
   // TODO: Do stuffs
 }
 

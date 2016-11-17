@@ -17,4 +17,7 @@ app.use(express.static('public'))
 server.listen(config.port, () => console.log('App running on port ' + config.port))
 
 const Engine = require('./game/engine')
-Engine.startGame('dumb', 'dumb')
+
+for (let i = 0; i < 10; i++) {
+  Engine.startGame('dumb', 'lessdumb')
+}
