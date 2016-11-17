@@ -25,7 +25,7 @@ module.exports = class GameCore {
 
   update () {
     this.state.turn += 1
-    if (this.state.turn > 10) {
+    if (this.state.turn > 1e3) {
       this.done = true
       this.winner = (this.state.scores[0] > this.state.scores[1] ? 0 : 1)
     } else {

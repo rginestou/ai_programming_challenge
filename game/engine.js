@@ -9,21 +9,30 @@ function startGame (...botNames) {
     bots[i].init(i, game.getState())
   }
 
-  // Play the game
-  while (!game.done) {
+  // Update game (1 turn)
+  let updateGame = () => {
+    // console.log('Game update')
     let actions = []
-    for (let i of [0, 1]) {
-      actions[i] = bots[i].getActions(game.getState())
-    }
-    for (let i of [0, 1]) {
-      for (let action of actions[i]) game.doAction(i, action)
-    }
+    for (let i of [0, 1]) actions[i] = bots[i].getActions(game.getState())
+    for (let i of [0, 1]) for (let action of actions[i]) game.doAction(i, action)
     game.update()
   }
 
-  // Game ended
-  console.log('Winner is: ' + botNames[game.winner] + ' (' + game.winner + ')')
-  // TODO: Do stuffs
+  // End game
+  let endGame = () => {
+    // TODO: Do stuffs
+    console.log('Winner is: ' + botNames[game.winner] + ' (' + game.winner + ')')
+  }
+
+  // Game loop
+  let gameLoop = () => {
+    if (game.done) return endGame()
+    updateGame()
+    setTimeout(gameLoop, 0) // Asynchronize
+  }
+
+  // Start the loop
+  gameLoop()
 }
 
 module.exports = {
