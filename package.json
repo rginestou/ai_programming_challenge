@@ -18,6 +18,7 @@
   "homepage": "https://github.com/Romaingin/ai_programming_challenge#readme",
   "dependencies": {
     "express": "^4.14.0",
+    "fast-simplex-noise": "^3.0.0-pre.4",
     "socket.io": "^1.5.1"
   }
 }
