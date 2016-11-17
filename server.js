@@ -14,7 +14,7 @@ io.on('connection', function (socket) {
 })
 
 app.use(express.static('public'))
-server.listen(config.port, () => console.log('App running on port ' + config.port))
+server.listen(config.server.port, () => console.log('App running on port ' + config.server.port))
 
 // ===
 const GameTeam = require('./game/team')
