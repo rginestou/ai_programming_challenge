@@ -5,8 +5,8 @@ const Isometric = {
   pos (wx, wy) {
     return [
       (wx - wy) * Isometric.tiles.dx / 2,
-      -(wy + wx) * Isometric.tiles.dy / 2,
-      -(wy + wx)
+      (wy + wx) * Isometric.tiles.dy / 2,
+      wy + wx
     ]
   },
   updateSize () {
@@ -16,24 +16,16 @@ const Isometric = {
 }
 Isometric.updateSize()
 
-// const obstacleHeight = 96
 const spriteConfig = {
   obstacle: { height: 96, name: 'obstacle_tiles.png' },
   building: { height: 96, name: 'buildings.png' }
 }
 
-function isometricPos (wx, wy) {
-  return [
-    (wx - wy) * Isometric.tiles.dx / 2,
-    -(wy + wx) * Isometric.tiles.dy / 2,
-    -(wy + wx)
-  ]
-}
-
 function displayGame (size, terrain, elements) {
   // Set origin
   Graphics.ox = Graphics.width / 2
-  Graphics.oy = Graphics.height - Isometric.tiles.dz * 2
+  Graphics.oy = Graphics.height - size * Isometric.tiles.dy
+
   // Set scaling
   if (size * Isometric.tiles.dx > Graphics.width * 0.9) {
     Graphics.scale = (Graphics.width * 0.9) / (size * Isometric.tiles.dx)
@@ -47,7 +39,7 @@ function displayGame (size, terrain, elements) {
       // Terrain
       let terrainType = terrain[wx][wy]
       let tile = new Sprite('terrain_tiles.png', terrainType * tileW, 0, tileW, tileH)
-      tile.setPosition(...isometricPos(wx, wy))
+      tile.setPosition(...Isometric.pos(wx, wy))
       tile.setOrigin(Isometric.tiles.dx / 2, Isometric.tiles.dy)
       Graphics.add(tile)
       // Elements
@@ -57,7 +49,7 @@ function displayGame (size, terrain, elements) {
           spriteConfig[element.type].name,
           element.sprite.x * 32, element.sprite.y * 32, tileW, spriteConfig[element.type].height
         )
-        sprite.setPosition(...isometricPos(wx, wy))
+        sprite.setPosition(...Isometric.pos(wx, wy))
         sprite.setOrigin(Isometric.tiles.dx / 2, spriteConfig[element.type].height)
         sprite.z += 1e3
         Graphics.add(sprite)

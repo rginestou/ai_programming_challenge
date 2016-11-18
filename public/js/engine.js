@@ -5,6 +5,7 @@ const socket = io.connect()
 socket.on('gameState', data => {
   console.log(data)
   // socket.emit('my other event', { my: 'data' })
+  Graphics.removeAll()
   displayGame(data.mapSize, data.terrain, data.elements)
 })
 

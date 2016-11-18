@@ -61,8 +61,12 @@ const Graphics = {
 
     this.update()
   },
-  add (...sprites) {
-    this.sprites.push(...sprites)
+  add (sprite, sort = false) {
+    this.sprites.push(sprite)
+    if (sort) this.sortSprites()
+  },
+  removeAll () {
+    this.sprites = []
   },
   clearCanvas () {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
@@ -70,12 +74,14 @@ const Graphics = {
   draw (sprite) {
     sprite.draw(this.context, this.ox, this.oy, this.scale)
   },
-  drawSprites () {
+  sortSprites () {
     this.sprites.sort((a, b) => {
       if (a.z > b.z) return 1
       if (a.z < b.z) return -1
       return 0
     })
+  },
+  drawSprites () {
     for (let sprite of this.sprites) this.draw(sprite)
   },
   refresh () {
