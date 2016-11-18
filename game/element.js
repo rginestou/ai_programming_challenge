@@ -6,6 +6,7 @@ module.exports = class GameElement {
     this.y = y
     this.size = 1
     this.team = null
+    this.sprite = { x: 0, y: 0 }
   }
 
   jsonify () {
@@ -15,7 +16,8 @@ module.exports = class GameElement {
       x: this.x,
       y: this.y,
       size: this.size,
-      team_id: this.team ? this.team.id : -1
+      team_id: this.team ? this.team.id : -1,
+      sprite: this.sprite
     }
   }
 
