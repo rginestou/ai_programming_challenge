@@ -1,16 +1,27 @@
+const generateMap = require('../utils/mapGenerator')
+const config = require('../config')
+const GameTeam = require('./team')
+
 module.exports = class GameCore {
   constructor () {
+    // Game init
     this.winner = null
     this.done = false
-    this.state = {
-      scores: [0, 0],
-      values: [0, 0],
-      turn: 0
-    }
+
+    // Create teams
+    this.teams = [ new GameTeam(0), new GameTeam(1) ]
+
+    let [terrain, elements] = generateMap()
+    this.terrain = terrain
+    this.elements = elements
   }
 
   getState () {
-    return this.state
+    return {
+      mapSize: config.mapGen.mapSize,
+      terrain: this.terrain,
+      elements: this.elements.map(a => a.map(b => b ? b.jsonify() : null))
+    }
   }
 
   doAction (playerId, action) {
