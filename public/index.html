@@ -28,23 +28,25 @@
 	</body>
 
 	<script src="/socket.io/socket.io.js"></script>
-	<script>
+
+	<script src="js/graphics.js"></script>
+	<script src="js/displayGame.js"></script>
+	<script src="js/engine.js"></script>
+
+	<!-- <script>
 	  var socket = io.connect();
-	  socket.on('news', function (data) {
+	  socket.on('gameState', function (data) {
 	    console.log(data);
 	    socket.emit('my other event', { my: 'data' });
 	  });
-	</script>
+	</script> -->
 
-	<script src="js/perlinnoise.js"></script>
+	<!-- <script src="js/perlinnoise.js"></script>
 	<script src="js/simplexnoise.js"></script>
 	<script src="js/mapgeneration.js"></script>
-	<script src="js/unit.js"></script>
-	<script src="js/engine.js"></script>
-	<script src="js/graphics.js"></script>
-	<script src="js/displayGame.js"></script>
+	<script src="js/unit.js"></script> -->
 
-	<script>
+	<!-- <script>
 		// Start game
 		const engine = new Engine({
 			map_size: 50,
@@ -53,5 +55,5 @@
 		// Show graphics
 		Graphics.setup('screen')
 		displayGame()
-	</script>
+	</script> -->
 </html>

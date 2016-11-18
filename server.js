@@ -6,11 +6,12 @@ const app = express()
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
 
+const GameCore = require('./game/core')
+
 io.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' })
-  socket.on('my other event', function (data) {
-    console.log(data)
-  })
+  let game = new GameCore()
+  socket.emit('gameState', game.getState())
+  socket.on('my other event', data => console.log(data))
 })
 
 app.use(express.static('public'))
@@ -31,14 +32,9 @@ server.listen(config.server.port, () => console.log('App running on port ' + con
 // new GameUnit(team, 1, 3, 3)
 // new GameUnit(team, 1, 4, 3)
 // new GameBuilding(team, 2, 2, 2)
+
+// const Engine = require('./game/engine')
 //
-// console.log(team.jsonify())
-
-const generate = require('./utils/mapGenerator')
-console.log(generate({ mapSize: 10 }))
-
-const Engine = require('./game/engine')
-
-for (let i = 0; i < 10; i++) {
-  Engine.startGame('dumb', 'lessdumb')
-}
+// for (let i = 0; i < 10; i++) {
+//   Engine.startGame('dumb', 'lessdumb')
+// }
