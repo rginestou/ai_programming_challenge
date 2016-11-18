@@ -1,7 +1,14 @@
 const GameElement = require('./element')
 const data = require('../data/buildings.json')
 
-module.exports = class GameUnit extends GameElement {
+// ====================================================
+//  > GameBuilding
+// ----------------------------------------------------
+// 	Class for buildings
+// ====================================================
+module.exports = class GameBuilding extends GameElement {
+
+	// > constructor (GameTeam team, id, x, y)
 	constructor (team, id, x, y) {
 		super(id, x, y)
 		this.team = team
@@ -12,6 +19,9 @@ module.exports = class GameUnit extends GameElement {
 		if (team) team.elements.push(this)
 	}
 
+	// > jsonify ()
+	//		return an object that can be given
+	// to the AI or the renderer
 	jsonify () {
 		return Object.assign(
 			super.jsonify(),
