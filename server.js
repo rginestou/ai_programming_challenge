@@ -36,3 +36,9 @@ server.listen(config.server.port, () => console.log('App running on port ' + con
 
 const generate = require('./utils/mapGenerator')
 console.log(generate({ mapSize: 10 }))
+
+const Engine = require('./game/engine')
+
+for (let i = 0; i < 10; i++) {
+  Engine.startGame('dumb', 'lessdumb')
+}
