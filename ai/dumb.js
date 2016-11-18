@@ -1,18 +1,18 @@
 module.exports = {
-  playerId: -1,
+	playerId: -1,
 
-  init (playerId, state) {
-    this.playerId = playerId
-  },
+	init (playerId, state) {
+		this.playerId = playerId
+	},
 
-  // gameState -> actions array
-  getActions (state) {
-    return [
-      {
-        type: 'play',
-        params: { value: Math.random() }
-      }
-    ]
-  }
+	// gameState -> actions array
+	getActions (state) {
+	return [
+		{
+			type: 'play',
+			params: { value: Math.random() }
+		}
+	]
+	}
 
 }

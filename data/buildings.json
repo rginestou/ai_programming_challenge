@@ -1,17 +1,17 @@
 [
-  {
-    "id": 0
-  }, {
-    "id": 1,
-    "name": "fountain",
-    "size": 1
-  }, {
-    "id": 2,
-    "name": "lumber-mill",
-    "size": 2
-  }, {
-    "id": 3,
-    "name": "barracks",
-    "size": 2
-  }
+	{
+		"id": 0
+	}, {
+		"id": 1,
+		"name": "fountain",
+		"size": 1
+	}, {
+		"id": 2,
+		"name": "lumber-mill",
+		"size": 2
+	}, {
+		"id": 3,
+		"name": "barracks",
+		"size": 2
+	}
 ]
