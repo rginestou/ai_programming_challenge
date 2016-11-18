@@ -9,13 +9,13 @@ const io = require('socket.io')(server)
 const GameCore = require('./game/core')
 
 io.on('connection', function (socket) {
-  let game = new GameCore()
-  socket.emit('gameState', game.getState())
-  socket.on('my other event', data => console.log(data))
+	var game = new GameCore()
+	socket.emit('gameState', game.getState())
+	socket.on('my other event', function(data){console.log(data)})
 })
 
 app.use(express.static('public'))
-server.listen(config.server.port, () => console.log('App running on port ' + config.server.port))
+server.listen(config.server.port, function(){console.log('App running on port ' + config.server.port)})
 
 // ===
 // const GameTeam = require('./game/team')
