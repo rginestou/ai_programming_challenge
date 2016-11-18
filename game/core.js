@@ -2,20 +2,30 @@ const generateMap = require('../utils/mapGenerator')
 const config = require('../config')
 const GameTeam = require('./team')
 
+// ====================================================
+//  > GameCore
+// ----------------------------------------------------
+// 	Class for a game between to players.
+//	-> attributes: done, winner
+//	-> methods: getState, doAction, update
+// ====================================================
 module.exports = class GameCore {
 	constructor () {
 		// Game init
-		this.winner = null
-		this.done = false
+		this.done = false // the game will stop when done is true
+		this.winner = null // 0 or 1 depending on who is the winner
 
 		// Create teams
 		this.teams = [ new GameTeam(0), new GameTeam(1) ]
 
 		let [terrain, elements] = generateMap()
-		this.terrain = terrain
-		this.elements = elements
+		this.terrain = terrain // fixed terrain
+		this.elements = elements // all game elements
 	}
 
+	// > getState ()
+	//		return all the informations about the game
+	// that will be given to the AI.
 	getState () {
 		return {
 			mapSize: config.mapGen.mapSize,
@@ -24,6 +34,9 @@ module.exports = class GameCore {
 		}
 	}
 
+	// > doAction (playerId, { type, params = { ... } })
+	//		All actions done by AI will be passed here,
+	// with the corresponding params.
 	doAction (playerId, action) {
 		switch (action.type) {
 		case 'play':
@@ -34,6 +47,8 @@ module.exports = class GameCore {
 		}
 	}
 
+	// > update ()
+	//		Called at the end of each turn of the game.
 	update () {
 		this.state.turn += 1
 		if (this.state.turn > 1e3) {

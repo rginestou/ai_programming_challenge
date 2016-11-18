@@ -1,5 +1,11 @@
 const GameCore = require('./core')
 
+// ====================================================
+//  > startGame ( AI_1, AI_2)
+// ----------------------------------------------------
+// 	Play a game between two AIs whith the names AI_1 &
+// AI_2 and update it t=until it ends.
+// ====================================================
 function startGame (...botNames) {
 	// Initialize
 	let game = new GameCore()
