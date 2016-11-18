@@ -3,8 +3,9 @@ const GameElement = require('./element')
 
 module.exports = class GameObstacle extends GameElement {
 
-  constructor (team, id, x, y) {
+  constructor (id, x, y) {
     super(id, x, y)
+    this.sprite.x = 2 * id
   }
 
   jsonify () {
