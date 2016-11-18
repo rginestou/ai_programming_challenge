@@ -41,13 +41,8 @@ class Sprite {
   }
 }
 
-const Graphics = {
-  sprites: [],
-  canvas: null, context: null,
-  width: 0, height: 0,
-  ox: 0, oy: 0,
-  scale: 1,
-  setup (canvasId) {
+class Canvas {
+  constructor (canvasId) {
     this.canvas = document.querySelector('canvas#' + canvasId)
     this.context = this.canvas.getContext('2d')
     // Good resizing
@@ -55,40 +50,51 @@ const Graphics = {
     this.context.mozImageSmoothingEnabled = false
     this.context.msImageSmoothingEnabled = false
     this.context.imageSmoothingEnabled = false
-
     this.width = this.canvas.width
     this.height = this.canvas.height
+    this.sprites = []
+    this.scale = 1
+    this.ox = 0
+    this.oy = 0
 
     this.update()
-  },
+  }
+
   add (sprite, sort = false) {
     this.sprites.push(sprite)
     if (sort) this.sortSprites()
-  },
+  }
+
   removeAll () {
     this.sprites = []
-  },
+  }
+
   clearCanvas () {
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height)
-  },
+  }
+
   draw (sprite) {
     sprite.draw(this.context, this.ox, this.oy, this.scale)
-  },
+  }
+
   sortSprites () {
     this.sprites.sort((a, b) => {
       if (a.z > b.z) return 1
       if (a.z < b.z) return -1
       return 0
     })
-  },
+  }
+
   drawSprites () {
     for (let sprite of this.sprites) this.draw(sprite)
-  },
+  }
+
   refresh () {
     if (!this.context) return
     this.clearCanvas()
     this.drawSprites()
-  },
+  }
+
   update () {
     this.refresh()
     requestAnimationFrame(() => this.update())

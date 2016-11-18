@@ -21,14 +21,14 @@ const spriteConfig = {
   building: { height: 96, name: 'buildings.png' }
 }
 
-function displayGame (size, terrain, elements) {
+function displayGame (canvas, size, terrain, elements) {
   // Set origin
-  Graphics.ox = Graphics.width / 2
-  Graphics.oy = Graphics.height - size * Isometric.tiles.dy
+  canvas.ox = canvas.width / 2
+  canvas.oy = canvas.height - size * Isometric.tiles.dy
 
   // Set scaling
-  if (size * Isometric.tiles.dx > Graphics.width * 0.9) {
-    Graphics.scale = (Graphics.width * 0.9) / (size * Isometric.tiles.dx)
+  if (size * Isometric.tiles.dx > canvas.width * 0.9) {
+    canvas.scale = (canvas.width * 0.9) / (size * Isometric.tiles.dx)
   }
 
   // Render
@@ -41,7 +41,7 @@ function displayGame (size, terrain, elements) {
       let tile = new Sprite('terrain_tiles.png', terrainType * tileW, 0, tileW, tileH)
       tile.setPosition(...Isometric.pos(wx, wy))
       tile.setOrigin(Isometric.tiles.dx / 2, Isometric.tiles.dy)
-      Graphics.add(tile)
+      canvas.add(tile)
       // Elements
       let element = elements[wx][wy]
       if (element && element.x === wx && element.y === wy) {
@@ -52,7 +52,7 @@ function displayGame (size, terrain, elements) {
         sprite.setPosition(...Isometric.pos(wx, wy))
         sprite.setOrigin(Isometric.tiles.dx / 2, spriteConfig[element.type].height)
         sprite.z += 1e3
-        Graphics.add(sprite)
+        canvas.add(sprite)
       }
     }
   }
