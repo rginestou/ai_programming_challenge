@@ -14,4 +14,4 @@ io.on('connection', function (socket) {
 })
 
 app.use(express.static('public'))
-server.listen(config.port, () => console.log('App running on port ' + config.port))
+server.listen(config.port, function(){console.log('App running on port ' + config.port)})
