@@ -3,7 +3,7 @@
 const imageCache = {}
 for (let src of [
 	'terrain_tiles.png',
-	'obstacle_tiles.png',
+	'resources_tiles.png',
 	'buildings.png'
 ]) {
 	imageCache[src] = new Image()

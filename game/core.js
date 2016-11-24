@@ -1,22 +1,22 @@
 const generateMap = require('../utils/mapGenerator')
 const config = require('../config')
-const GameTeam = require('./team')
+const Team = require('./team')
 
 // ====================================================
-//  > GameCore
+//  > Core
 // ----------------------------------------------------
 // 	Class for a game between to players.
 //	-> attributes: done, winner
 //	-> methods: getState, doAction, update
 // ====================================================
-module.exports = class GameCore {
+module.exports = class Core {
 	constructor () {
 		// Game init
 		this.done = false // the game will stop when done is true
 		this.winner = null // 0 or 1 depending on who is the winner
 
 		// Create teams
-		this.teams = [ new GameTeam(0), new GameTeam(1) ]
+		this.teams = [ new Team(0), new Team(1) ]
 
 		let [terrain, elements] = generateMap()
 		this.terrain = terrain // fixed terrain

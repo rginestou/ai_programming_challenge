@@ -4,7 +4,17 @@
 	}, {
 		"id": 1,
 		"name": "swordman",
-		"life": 100,
-		"move": 3
+		"health": 100,
+		"walk_range": 1
+	}, {
+		"id": 2,
+		"name": "archer",
+		"health": 80,
+		"walk_range": 1
+	}, {
+		"id": 3,
+		"name": "villager",
+		"health": 50,
+		"walk_range": 1
 	}
 ]

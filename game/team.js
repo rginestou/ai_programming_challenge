@@ -1,10 +1,10 @@
 // ====================================================
-//  > GameTeam
+//  > Team
 // ----------------------------------------------------
 // 	Class for all information concerning one side of
 // a game
 // ====================================================
-module.exports = class GameTeam {
+module.exports = class Team {
 
 	// > constructor ((0 | 1) id)
 	constructor (id) {

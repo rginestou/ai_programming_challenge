@@ -1,12 +1,12 @@
-const Element = require('./element')
-const data = require('../data/buildings.json')
+const Unit = require('./unit')
+const data = require('../data/units.json')
 
 // ====================================================
-//  > Building
+//  > Military
 // ----------------------------------------------------
-// 	Class for buildings
+// 	Class for villagers (carry resources / build)
 // ====================================================
-module.exports = class Building extends Element {
+module.exports = class Villager extends Unit {
 
 	// > constructor (Team team, id, x, y)
 	constructor (team, id, x, y) {
@@ -14,7 +14,9 @@ module.exports = class Building extends Element {
 		this.team = team
 		// Read data
 		this.name = data[id].name
-		this.size = data[id].size
+		this.maxHealthPoint = data[id].life
+		this.healthPoint = this.maxHealthPoint
+		this.walkRange = data[id].walk_range
 		// Add to team
 		if (team) team.elements.push(this)
 	}
@@ -23,9 +25,7 @@ module.exports = class Building extends Element {
 	//		return an object that can be given
 	// to the AI or the renderer
 	jsonify () {
-		return Object.assign(
-			super.jsonify(),
-			{ type: 'building' }
-		)
+		return Object.assign(super.jsonify(), { type: 'military' })
 	}
+
 }

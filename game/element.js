@@ -1,30 +1,34 @@
 // ====================================================
-//  > GameElement
+//  > Element
 // ----------------------------------------------------
 // 	Class for all items on the terrain (trees, towers,
 // lancer, etc.)
 // ====================================================
-module.exports = class GameElement {
+module.exports = class Element {
 
 	// > constructor (id, x, y)
 	constructor (id, x, y) {
 		this.id = id
-		this.x = x // X coord on the map
-		this.y = y // Y coord on the map
+		this.team = null // team (Team) the element belongs to, null for none
+		this.pos = {x : x, y : y} // Coord. on the map
 		this.size = 1 // Size of the slot occupied (1x1, 2x2, etc.)
-		this.team = null // team (GameTeam) the element belongs to, null for none
+		this.healthPoint = 10 // Health points of the element
+		this.maxHealthPoint = 10 // Maximum HP this element can ever have
 		this.sprite = { x: 0, y: 0 } // position (x, y) of the sprite on the spriteset (1 = 32px)
+
+		// Static variables TODO
+		this.attackFactors = {}
+		this.defenseFactors = {}
 	}
 
 	// > jsonify ()
-	//		return an object that can be given
-	// to the AI or the renderer
+	//	return an object that can be given
+	//to the AI or the renderer
 	jsonify () {
 		return {
 			type: 'none',
 			id: this.id,
-			x: this.x,
-			y: this.y,
+			pos: this.pos,
 			size: this.size,
 			team_id: this.team ? this.team.id : -1,
 			sprite: this.sprite

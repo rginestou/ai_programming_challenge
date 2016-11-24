@@ -6,10 +6,10 @@ const app = express()
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
 
-const GameCore = require('./game/core')
+const Core = require('./game/core')
 
 io.on('connection', function (socket) {
-	var game = new GameCore()
+	var game = new Core()
 	socket.emit('gameState', game.getState())
 	socket.on('my other event', function(data){console.log(data)})
 })

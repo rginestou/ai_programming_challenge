@@ -1,6 +1,6 @@
 const FastSimplexNoise = require('fast-simplex-noise')
-const GameObstacle = require('../game/obstacle')
-const GameBuilding = require('../game/building')
+const Resource = require('../game/resource')
+const Building = require('../game/building')
 const config = require('../config')
 
 const sq = x => x * x
@@ -69,7 +69,7 @@ module.exports = function generate (options = {}) {
 			terrain[x][y] < 14 && terrain[x][y] > 8 &&
 			rainNoiseGen.scaled2D(x / opt.rainZoomLevel, y / opt.rainZoomLevel) > opt.treeRainLevel
 		) {
-			return new GameObstacle(Math.floor(Math.random() * 3), x, y)
+			return new Resource(Math.floor(Math.random() * 3), x, y)
 		}
 	})
 
@@ -109,7 +109,7 @@ module.exports = function generate (options = {}) {
 				terrain[x + dx][y + dy] = 16
 			}
 		}
-		elements[x][y] = new GameBuilding(null, 1, x, y)
+		elements[x][y] = new Building(null, 1, x, y)
 	}
 
 	let off = Math.max(Math.floor(opt.mapSize / 6), opt.fountainRadius)

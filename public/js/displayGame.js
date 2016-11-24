@@ -17,7 +17,7 @@ const Isometric = {
 Isometric.updateSize()
 
 const spriteConfig = {
-	obstacle: { height: 96, name: 'obstacle_tiles.png' },
+	resource: { height: 96, name: 'resources_tiles.png' },
 	building: { height: 96, name: 'buildings.png' }
 }
 
@@ -48,7 +48,7 @@ function displayGame (canvas, size, terrain, elements) {
 			canvas.add(tile)
 			// Elements
 			let element = elements[wx][wy]
-			if (element && element.x === wx && element.y === wy) {
+			if (element && element.pos.x === wx && element.pos.y === wy) {
 				let sprite = new Sprite(
 					spriteConfig[element.type].name,
 					element.sprite.x * 32, element.sprite.y * 32, tileW, spriteConfig[element.type].height

@@ -1,21 +1,23 @@
-const GameElement = require('./element')
+const Element = require('./element')
 const data = require('../data/units.json')
 
 // ====================================================
-//  > GameUnits
+//  > Units
 // ----------------------------------------------------
 // 	Class for units
 // ====================================================
-module.exports = class GameUnit extends GameElement {
+module.exports = class Unit extends Element {
 
-	// > constructor (GameTeam team, id, x, y)
+	// > constructor (Team team, id, x, y)
 	constructor (team, id, x, y) {
 		super(id, x, y)
 		this.team = team
+		this.target = null
 		// Read data
 		this.name = data[id].name
-		this.life = data[id].life
-		this.move = data[id].move
+		this.maxHealthPoint = data[id].life
+		this.healthPoint = this.maxHealthPoint
+		this.walkRange = data[id].walk_range
 		// Add to team
 		if (team) team.elements.push(this)
 	}
@@ -28,7 +30,7 @@ module.exports = class GameUnit extends GameElement {
 		super.jsonify(),
 		{
 			type: 'unit',
-			life: this.life
+			health: this.healthPoint
 		}
 	)
 	}

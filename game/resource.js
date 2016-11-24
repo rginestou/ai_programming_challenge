@@ -1,12 +1,12 @@
-const GameElement = require('./element')
-// const data = require('../data/obstacles.json')
+const Element = require('./element')
+// const data = require('../data/resource.json')
 
 // ====================================================
-//  > GameObstacle
+//  > Resource
 // ----------------------------------------------------
-// 	Class for neutral props (rocks, threes, etc.)
+// 	Class for resources (fountains, threes, etc.)
 // ====================================================
-module.exports = class GameObstacle extends GameElement {
+module.exports = class Resource extends Element {
 
 	// > constructor (id, x, y)
 	constructor (id, x, y) {
@@ -18,7 +18,7 @@ module.exports = class GameObstacle extends GameElement {
 	//		return an object that can be given
 	// to the AI or the renderer
 	jsonify () {
-		return Object.assign(super.jsonify(), { type: 'obstacle' })
+		return Object.assign(super.jsonify(), { type: 'resource' })
 	}
 
 }

@@ -1,4 +1,4 @@
-const GameCore = require('./core')
+const Core = require('./core')
 
 // ====================================================
 //  > startGame ( AI_1, AI_2)
@@ -8,7 +8,7 @@ const GameCore = require('./core')
 // ====================================================
 function startGame (...botNames) {
 	// Initialize
-	let game = new GameCore()
+	let game = new Core()
 	let bots = []
 	for (let i of [0, 1]) {
 		bots[i] = require('../ai/' + botNames[i])
