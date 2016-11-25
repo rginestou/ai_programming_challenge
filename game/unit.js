@@ -18,6 +18,7 @@ module.exports = class Unit extends Element {
 		this.maxHealthPoint = data[id].life
 		this.healthPoint = this.maxHealthPoint
 		this.walkRange = data[id].walk_range
+		this.cost = data[id].cost
 		// Add to team
 		if (team) team.elements.push(this)
 	}

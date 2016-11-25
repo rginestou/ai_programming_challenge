@@ -15,6 +15,7 @@ module.exports = class Element {
 		this.healthPoint = 10 // Health points of the element
 		this.maxHealthPoint = 10 // Maximum HP this element can ever have
 		this.sprite = { x: 0, y: 0 } // position (x, y) of the sprite on the spriteset (1 = 32px)
+    this.cost = 0 // Cost of the element, to be defined in inherited classes (Units, Buildings)
 
 		// Static variables TODO
 		this.attackFactors = {}
