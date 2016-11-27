@@ -21,6 +21,10 @@ module.exports = class Villager extends Unit {
 		if (team) team.elements.push(this)
 	}
 
+	function attack(target, damage){
+		target.takeDamage(damage)
+	}
+
 	// > jsonify ()
 	//		return an object that can be given
 	// to the AI or the renderer

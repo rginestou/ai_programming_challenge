@@ -4,14 +4,17 @@
 	}, {
 		"id": 1,
 		"name": "fountain",
-		"size": 1
+		"size": 1,
+		"cost": null
 	}, {
 		"id": 2,
 		"name": "lumber-mill",
-		"size": 2
+		"size": 2,
+		"cost": 100
 	}, {
 		"id": 3,
 		"name": "barracks",
-		"size": 2
+		"size": 2,
+		"cost": 100
 	}
 ]
