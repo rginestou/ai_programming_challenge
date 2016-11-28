@@ -10,15 +10,13 @@ module.exports = class Villager extends Unit {
 
 	// > constructor (Team team, id, x, y)
 	constructor (team, id, x, y) {
-		super(id, x, y)
+		super(team, id, x, y)
 		this.team = team
 		// Read data
 		this.name = data[id].name
 		this.maxHealthPoint = data[id].life
 		this.healthPoint = this.maxHealthPoint
 		this.walkRange = data[id].walk_range
-		// Add to team
-		if (team) team.elements.push(this)
 	}
 
 	function attack(target, damage){

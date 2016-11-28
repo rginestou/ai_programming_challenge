@@ -3,7 +3,7 @@
 		"id": 0
 	}, {
 		"id": 1,
-		"name": "swordman",
+		"name": "knight",
 		"health": 100,
 		"walk_range": 1,
 		"cost": 40
@@ -19,13 +19,5 @@
 		"health": 50,
 		"walk_range": 1,
 		"cost": 35
-	}, {
-		"id" : 4,
-		"name": "infantry",
-		"health": 90,
-		"walk_range": 1,
-		"attack_damage": 15,
-		"ammo_stock": 3,
-		"cost": 60
 	}
 ]

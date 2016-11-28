@@ -25,7 +25,7 @@ module.exports = class Unit extends Element {
 
   // Attack method is not is not implemented here because villagers are assumed not to be able to attack.
 
-  function isAlive(){
+	isAlive(){
 		if (this.healthPoint <= 0){
 			return true
 		}
@@ -33,11 +33,11 @@ module.exports = class Unit extends Element {
 	}
 
   // Handle taking damage and check if the unit is dead afterwards
-  function takeDamage(damage){
+	takeDamage(damage){
 		this.healthPoint -= damage
 		if (!this.isAlive()){
 			// Call unit destructor ????
-			this = null
+			//this = null
 		}
 	}
 

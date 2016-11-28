@@ -18,7 +18,8 @@ Isometric.updateSize()
 
 const spriteConfig = {
 	resource: { height: 96, name: 'resources_tiles.png' },
-	building: { height: 96, name: 'buildings.png' }
+	building: { height: 96, name: 'buildings.png' },
+	unit: { height: 96, name: 'units.png' }
 }
 
 function displayGame (canvas, size, terrain, elements) {
@@ -46,12 +47,13 @@ function displayGame (canvas, size, terrain, elements) {
 			tile.setPosition(...Isometric.pos(wx, wy))
 			tile.setOrigin(Isometric.tiles.dx / 2, Isometric.tiles.dy)
 			canvas.add(tile)
+
 			// Elements
 			let element = elements[wx][wy]
 			if (element && element.pos.x === wx && element.pos.y === wy) {
 				let sprite = new Sprite(
 					spriteConfig[element.type].name,
-					element.sprite.x * 32, element.sprite.y * 32, tileW, spriteConfig[element.type].height
+					element.sprite.x * 64, element.sprite.y * 96, tileW, spriteConfig[element.type].height
 				)
 				sprite.setPosition(...Isometric.pos(wx, wy))
 				sprite.setOrigin(Isometric.tiles.dx / 2, spriteConfig[element.type].height)

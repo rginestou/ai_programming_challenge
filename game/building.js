@@ -22,8 +22,6 @@ module.exports = class Building extends Element {
 		const MAX_QUEUE_SIZE = 5
 		this.queue = new queue(MAX_QUEUE_SIZE)
 
-
-
 		// Add to team
 		if (team) team.elements.push(this)
 	}
@@ -42,18 +40,19 @@ module.exports = class Building extends Element {
 // Basic limited size queue implementation used for queuing production
 class queue{
 	constructor(max_queue_size){
-		this.queue = new Arraw()
+		this.queue = new Array()
 		this.queueSize = max_queue_size
 	}
 
-	function push(item){
-		if this.queue.size < MAX_QUEUE_SIZE{
+	push(item){
+		if (this.queueSize < MAX_QUEUE_SIZE)
+		{
 			this.queue.unshift(item)
 		}
 		// Maybe display an error to the player ?
 	}
 
-	function pop(){
+	pop(){
 		return this.queue.pop()
 	}
 }

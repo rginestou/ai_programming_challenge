@@ -1,6 +1,7 @@
 const generateMap = require('../utils/mapGenerator')
 const config = require('../config')
 const Team = require('./team')
+const Villager = require('./villager')
 
 // ====================================================
 //  > Core
@@ -21,6 +22,9 @@ module.exports = class Core {
 		let [terrain, elements] = generateMap()
 		this.terrain = terrain // fixed terrain
 		this.elements = elements // all game elements
+
+		// Testing purposes TODO
+		this.elements[2][2] = new Villager(this.teams[0],2,2,2)
 	}
 
 	// > getState ()

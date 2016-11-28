@@ -11,7 +11,7 @@ module.exports = class Resource extends Element {
 	// > constructor (id, x, y)
 	constructor (id, x, y) {
 		super(id, x, y)
-		this.sprite.x = 2 * id
+		this.sprite.x = id
 	}
 
 	// > jsonify ()
