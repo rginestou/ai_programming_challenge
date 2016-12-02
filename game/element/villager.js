@@ -1,5 +1,4 @@
-const Unit = require('./unit')
-const data = require('../data/units.json')
+const Unit = require('../abstract/unit')
 
 // ====================================================
 //  > Villager
@@ -8,17 +7,17 @@ const data = require('../data/units.json')
 // ====================================================
 module.exports = class Villager extends Unit {
 
-	// > constructor (Team team, id, x, y)
-	constructor (team, id, x, y) {
-		super(team, id, x, y)
+	// > constructor (Team team, x, y)
+	constructor (team, x, y) {
+		super(team, x, y)
 		this.team = team
 		this.load = 0 // What the villager carries
 		this.sprite = { x: 1, y: 2 }
 		// Read data
-		this.name = data[id].name
-		this.maxHealthPoint = data[id].life
-		this.healthPoint = this.maxHealthPoint
-		this.walkRange = data[id].walk_range
+		// this.name = data[id].name
+		// this.maxHealthPoint = data[id].life
+		// this.healthPoint = this.maxHealthPoint
+		// this.walkRange = data[id].walk_range
 	}
 
 	// > harvest

@@ -1,5 +1,4 @@
 const Element = require('./element')
-const data = require('../data/units.json')
 
 // ====================================================
 //  > Units
@@ -14,11 +13,11 @@ module.exports = class Unit extends Element {
 		this.team = team
 		this.target = null
 		// Read data
-		this.name = data[id].name
-		this.maxHealthPoint = data[id].life
-		this.healthPoint = this.maxHealthPoint
-		this.walkRange = data[id].walk_range
-		this.cost = data[id].cost
+		// this.name = data[id].name
+		// this.maxHealthPoint = data[id].life
+		// this.healthPoint = this.maxHealthPoint
+		// this.walkRange = data[id].walk_range
+		// this.cost = data[id].cost
 		// Add to team
 		if (team) team.elements.push(this)
 	}

@@ -8,6 +8,8 @@
 		<link rel="stylesheet" href="css/styles.css?v=1.0">
 	</head>
 
+	<script src="https://cdn.jsdelivr.net/vue/latest/vue.js"></script>
+
 	<style>
 		body {
 			display: flex;
@@ -21,15 +23,27 @@
 	</style>
 
 	<body>
-		<div>
+		<div id="app">
 			<!--TODO : Dynamic scaling, depending on the the page's layout-->
-			<canvas id="screen" width="1600" height="800"></canvas>
+			<canvas v-if="hasParty" id="screen" width="1600" height="800"></canvas>
+			<div v-else>
+				<select v-model="ai1">
+					<option v-for="ai in aiList">{{ ai }}</option>
+				</select>
+				VS
+				<select v-model="ai2">
+					<option v-for="ai in aiList">{{ ai }}</option>
+				</select>
+
+				<button @click="onSubmit">Start!</button>
+			</div>
 		</div>
 	</body>
 
-	<script src="/socket.io/socket.io.js"></script>
+	<script src="/socket.io/socket.io.js"></script>*
 
 	<script src="js/graphics.js"></script>
 	<script src="js/displayGame.js"></script>
-	<script src="js/engine.js"></script>
+
+	<script src="js/app.js" charset="utf-8"></script>
 </html>

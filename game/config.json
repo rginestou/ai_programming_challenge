@@ -1,0 +1,13 @@
+{
+	"mapGen": {
+		"mapSize": 50,
+		"fountainRadius": 2,
+		"baseZoomLevel": 80.0,
+		"detailZoomLevel": 60.0,
+		"rainZoomLevel": 10.0,
+		"detailWeight": 0.15,
+		"treeRainLevel": 0.35,
+		"tilesSpectrum": 16,
+		"sandId": 5
+	}
+}

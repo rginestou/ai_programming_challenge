@@ -1,7 +1,7 @@
-const generateMap = require('../utils/mapGenerator')
-const config = require('../config')
+const generateMap = require('./utils/mapGenerator')
+const config = require('./config')
 const Team = require('./team')
-const Villager = require('./villager')
+const Villager = require('./element/villager')
 
 // ====================================================
 //  > Core
@@ -13,6 +13,7 @@ const Villager = require('./villager')
 module.exports = class Core {
 	constructor () {
 		// Game init
+		this.turn = 0
 		this.done = false // the game will stop when done is true
 		this.winner = null // 0 or 1 depending on who is the winner
 
@@ -54,16 +55,10 @@ module.exports = class Core {
 	// > update ()
 	//		Called at the end of each turn of the game.
 	update () {
-		this.state.turn += 1
-		if (this.state.turn > 1e3) {
+		this.turn += 1
+		if (this.turn > 1e3) {
 			this.done = true
-			this.winner = (this.state.scores[0] > this.state.scores[1] ? 0 : 1)
-		} else {
-			if (this.state.values[0] > this.state.values[1]) {
-				this.state.scores[0] += 1
-			} else {
-				this.state.scores[1] += 1
-			}
+			return
 		}
 	}
 

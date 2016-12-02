@@ -1,6 +1,6 @@
 const FastSimplexNoise = require('fast-simplex-noise')
-const Resource = require('../game/resource')
-const Building = require('../game/building')
+const Resource = require('../abstract/resource')
+const Building = require('../abstract/building')
 const config = require('../config')
 
 const sq = x => x * x

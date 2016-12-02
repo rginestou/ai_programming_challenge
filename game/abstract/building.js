@@ -1,5 +1,4 @@
 const Element = require('./element')
-const data = require('../data/buildings.json')
 
 // ====================================================
 //  > Building
@@ -14,9 +13,9 @@ module.exports = class Building extends Element {
 		this.team = team
 
 		// Read data
-		this.name = data[id].name
-		this.size = data[id].size
-		this.cost = data[id].cost
+		// this.name = data[id].name
+		// this.size = data[id].size
+		// this.cost = data[id].cost
 
 		// Building queue
 		const MAX_QUEUE_SIZE = 5

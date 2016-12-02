@@ -1,5 +1,4 @@
 const Element = require('./element')
-// const data = require('../data/resource.json')
 
 // ====================================================
 //  > Resource
