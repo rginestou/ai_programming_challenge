@@ -9,5 +9,9 @@
 		"treeRainLevel": 0.35,
 		"tilesSpectrum": 16,
 		"sandId": 5
+	},
+
+	"gameConst": {
+		"gloryPoints": 5
 	}
 }

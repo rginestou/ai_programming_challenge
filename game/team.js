@@ -9,7 +9,7 @@ module.exports = class Team {
 	// > constructor ((0 | 1) id)
 	constructor (id) {
 		this.id = id
-		this.resources = 0
+		this.resources = { wood : 0, glory : 0 }
 		this.elements = []
 	}
 

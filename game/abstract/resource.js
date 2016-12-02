@@ -8,16 +8,18 @@ const Element = require('./element')
 module.exports = class Resource extends Element {
 
 	// > constructor (id, x, y)
-	constructor (id, x, y) {
-		super(id, x, y)
-		this.sprite.x = id
+	constructor (x, y) {
+		super(x, y)
 	}
 
 	// > jsonify ()
 	//		return an object that can be given
 	// to the AI or the renderer
 	jsonify () {
-		return Object.assign(super.jsonify(), { type: 'resource' })
+		return Object.assign(
+			super.jsonify(),
+			{ type: 'resource' }
+		)
 	}
 
 }

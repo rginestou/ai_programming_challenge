@@ -6,16 +6,15 @@
 // ====================================================
 module.exports = class Element {
 
-	// > constructor (id, x, y)
-	constructor (id, x, y) {
-		this.id = id
+	// > constructor (x, y)
+	constructor (x, y) {
 		this.team = null // team (Team) the element belongs to, null for none
 		this.pos = {x : x, y : y} // Coord. on the map
 		this.size = 1 // Size of the slot occupied (1x1, 2x2, etc.)
 		this.healthPoint = 10 // Health points of the element
 		this.maxHealthPoint = 10 // Maximum HP this element can ever have
 		this.sprite = { x: 0, y: 0 } // position (x, y) of the sprite on the spriteset (1 = 32px)
-    this.cost = 0 // Cost of the element, to be defined in inherited classes (Units, Buildings)
+		this.cost = 0 // Cost of the element, to be defined in inherited classes (Units, Buildings)
 
 		// Static variables TODO
 		this.attackFactors = {}

@@ -8,8 +8,8 @@ const Element = require('./element')
 module.exports = class Unit extends Element {
 
 	// > constructor (Team team, id, x, y)
-	constructor (team, id, x, y) {
-		super(id, x, y)
+	constructor (team, x, y) {
+		super(x, y)
 		this.team = team
 		this.target = null
 		// Read data
@@ -45,12 +45,9 @@ module.exports = class Unit extends Element {
 	// to the AI or the renderer
 	jsonify () {
 		return Object.assign(
-		super.jsonify(),
-		{
-			type: 'unit',
-			health: this.healthPoint
-		}
-	)
+			super.jsonify(),
+			{ type: 'unit' }
+		)
 	}
 
 }

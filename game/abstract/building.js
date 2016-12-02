@@ -7,15 +7,10 @@ const Element = require('./element')
 // ====================================================
 module.exports = class Building extends Element {
 
-	// > constructor (Team team, id, x, y)
-	constructor (team, id, x, y) {
-		super(id, x, y)
+	// > constructor (Team team, x, y)
+	constructor (team, x, y) {
+		super(x, y)
 		this.team = team
-
-		// Read data
-		// this.name = data[id].name
-		// this.size = data[id].size
-		// this.cost = data[id].cost
 
 		// Building queue
 		const MAX_QUEUE_SIZE = 5
