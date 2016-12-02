@@ -25,7 +25,7 @@ module.exports = class Core {
 		this.elements = elements // all game elements
 
 		// Testing purposes TODO
-		this.elements[2][2] = new Villager(this.teams[0],2,2,2)
+		this.elements[2][2] = new Villager(this.teams[0],2,2)
 	}
 
 	// > getState ()

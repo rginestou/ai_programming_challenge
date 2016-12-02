@@ -25,7 +25,10 @@
 	<body>
 		<div id="app">
 			<!--TODO : Dynamic scaling, depending on the the page's layout-->
-			<canvas v-if="hasParty" id="screen" width="1600" height="800"></canvas>
+			<canvas id="screen" width="1600" height="800"></canvas>
+
+			<!-- <canvas v-if="hasParty" id="screen" width="1600" height="800"></canvas>
+
 			<div v-else>
 				<select v-model="ai1">
 					<option v-for="ai in aiList">{{ ai }}</option>
@@ -36,7 +39,7 @@
 				</select>
 
 				<button @click="onSubmit">Start!</button>
-			</div>
+			</div> -->
 		</div>
 	</body>
 
@@ -46,4 +49,23 @@
 	<script src="js/displayGame.js"></script>
 
 	<script src="js/app.js" charset="utf-8"></script>
+	<script type="text/javascript">
+	const socket = io.connect()
+	socket.emit('start-game', ["safe", "safe"])
+	socket.on('start-game', state => {
+	const screen = new Canvas('screen')
+	displayGame(screen, state.mapSize, state.terrain, state.elements)
+	})
+	socket.on('update-game', state => {
+	if (!screen) return
+	screen.removeAll()
+	displayGame(screen, state.mapSize, state.terrain, state.elements)
+	})
+	socket.on('end-game', data => {
+	if (!screen) return
+	console.log(data.winner)
+	screen.removeAll()
+	screen = null
+	})
+	</script>
 </html>

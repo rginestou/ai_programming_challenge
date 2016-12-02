@@ -10,7 +10,7 @@ module.exports = class Archer extends Unit {
 	// > constructor (Team team, x, y)
 	constructor (team, x, y) {
 		super(team, x, y)
-		// ...
+		this.sprite = { x: 0, y: 1 }
 	}
 
 }

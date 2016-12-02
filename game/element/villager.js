@@ -10,7 +10,6 @@ module.exports = class Villager extends Unit {
 	// > constructor (Team team, x, y)
 	constructor (team, x, y) {
 		super(team, x, y)
-		this.team = team
 		this.load = 0 // What the villager carries
 		this.sprite = { x: 1, y: 2 }
 		// Read data
@@ -34,12 +33,4 @@ module.exports = class Villager extends Unit {
 		this.load = 0
 		return t
 	}
-
-	// > jsonify ()
-	//		return an object that can be given
-	// to the AI or the renderer
-	jsonify () {
-		return Object.assign( super.jsonify(), { type: 'unit' })
-	}
-
 }
