@@ -49,23 +49,25 @@
 	<script src="js/displayGame.js"></script>
 
 	<script src="js/app.js" charset="utf-8"></script>
+
+	<!-- Temporary -->
 	<script type="text/javascript">
-	const socket = io.connect()
-	socket.emit('start-game', ["safe", "safe"])
-	socket.on('start-game', state => {
-	const screen = new Canvas('screen')
-	displayGame(screen, state.mapSize, state.terrain, state.elements)
-	})
-	socket.on('update-game', state => {
-	if (!screen) return
-	screen.removeAll()
-	displayGame(screen, state.mapSize, state.terrain, state.elements)
-	})
-	socket.on('end-game', data => {
-	if (!screen) return
-	console.log(data.winner)
-	screen.removeAll()
-	screen = null
-	})
+		const socket = io.connect()
+		socket.emit('start-game', ["safe", "safe"])
+		socket.on('start-game', state => {
+		const screen = new Canvas('screen')
+		displayGame(screen, state.mapSize, state.terrain, state.elements)
+		})
+		socket.on('update-game', state => {
+		if (!screen) return
+		screen.removeAll()
+		displayGame(screen, state.mapSize, state.terrain, state.elements)
+		})
+		socket.on('end-game', data => {
+		if (!screen) return
+		console.log(data.winner)
+		screen.removeAll()
+		screen = null
+		})
 	</script>
 </html>

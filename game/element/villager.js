@@ -23,6 +23,8 @@ module.exports = class Villager extends Unit {
 	// 	Update the villager's load of a certain amount
 	harvest(amount) {
 		this.load += amount
+
+		return true
 	}
 
 	// > unload

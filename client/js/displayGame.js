@@ -34,28 +34,30 @@ function displayGame (canvas, size, terrain, elements) {
 	canvas.ox = canvas.width / 2
 	canvas.oy = canvas.height - f * size * Isometric.tiles.dy
 
-
-
 	// Render
 	const tileW = Isometric.tiles.width
 	const tileH = Isometric.tiles.height
+	// Terrain
 	for (let wx = 0; wx < size; wx++) {
 		for (let wy = 0; wy < size; wy++) {
-		// Terrain
 			let terrainType = terrain[wx][wy]
 			let tile = new Sprite('terrain_tiles.png', terrainType * tileW, 0, tileW, tileH)
 			tile.setPosition(...Isometric.pos(wx, wy))
 			tile.setOrigin(Isometric.tiles.dx / 2, Isometric.tiles.dy)
 			canvas.add(tile)
-
-			// Elements
+		}
+	}
+	// Elements
+	for (let wx = 0; wx < size; wx++) {
+		for (let wy = 0; wy < size; wy++) {
 			let element = elements[wx][wy]
 			if (element && element.pos.x === wx && element.pos.y === wy) {
 				let sprite = new Sprite(
 					spriteConfig[element.type].name,
-					element.sprite.x * 64, element.sprite.y * 96, tileW, spriteConfig[element.type].height
+					element.sprite.x * 64, element.sprite.y * 96,
+					tileW * element.size, spriteConfig[element.type].height
 				)
-				sprite.setPosition(...Isometric.pos(wx, wy))
+				sprite.setPosition(...Isometric.pos(wx + (element.size - 1) * 0.5, wy + (element.size-1) * 1.5))
 				sprite.setOrigin(Isometric.tiles.dx / 2, spriteConfig[element.type].height)
 				sprite.z += 1e3
 				canvas.add(sprite)

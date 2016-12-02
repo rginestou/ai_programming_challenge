@@ -13,5 +13,9 @@
 
 	"gameConst": {
 		"gloryPoints": 5
+	},
+
+	"cost": {
+		"sawmill": { "wood": 50, "glory": 0 }
 	}
 }
