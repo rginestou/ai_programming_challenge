@@ -18,8 +18,16 @@ new Vue({
       })
     })
     this.socket.on('update-game', state => {
+      if (!this.screen) return
       this.screen.removeAll()
       displayGame(this.screen, state.mapSize, state.terrain, state.elements)
+    })
+    this.socket.on('end-game', data => {
+      if (!this.screen) return
+      console.log(data.winner)
+      this.screen.removeAll()
+      this.screen = null
+      this.hasParty = false
     })
   },
   methods: {
