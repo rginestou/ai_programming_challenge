@@ -11,7 +11,7 @@ const Sawmill = require('./element/sawmill')
 // 	Class for a game between to players.
 //	-> attributes: done, winner
 //	-> methods: getState, doAction, update
-//			addElement
+//			addElement, hasEnough
 // ====================================================
 module.exports = class Core {
 	constructor () {
@@ -28,7 +28,7 @@ module.exports = class Core {
 		this.elements = elements // all game elements
 
 		// Testing purposes TODO
-		this.addElement({id:0, name:"sawmill", x:0, y:0})
+		this.addElement({id:0, name:"sawmill", x:10, y:0})
 	}
 
 	// > getState ()
@@ -74,22 +74,81 @@ module.exports = class Core {
 		}
 	}
 
-	// > addElement ({ teamId(id), name, x, y })
-	// 		Generic class that check the type of the element to add,
-	// 		verifies and takes relevant actions
-	addElement (e) {
-		switch (e.name) {
-		case "unit":
-
-			break
-		case "sawmill":
-			// Check if possible
-			if (!mapUtils.isAreaClear(e.x, e.y, 2, 2, this.terrain, this.elements) &&
-				!this.hasEnough(e.id, "sawmill")) {
+	// > moveElement ({ teamId(id), x, y, tx, ty })
+	//		Generic class that check the type of the element to move,
+	// 		then set the content of the new cell, as well as set the
+	//		previous cell to `null`.
+	moveElement (a) {
+		let e = this.elements[a.x][a.y]
+		// Check if the player has the right to move it
+		if (a.id != e.team.id &&
+			!mapUtils.isAreaClear(a.tx, a.ty, 1, 1, this.terrain, this.elements)) {
+			return false
+		}
+		switch (e.name) { // TODO
+		case "villager":
+			if (!mapUtils.isWithinRadius(1, {x: e.x, y: e.y}, {x: e.tx, y: e.ty})) {
 				return false
 			}
-			// Add the actual element
+			break
+		case "knight":
+			if (!mapUtils.isWithinRadius(1, {x: e.x, y: e.y}, {x: e.tx, y: e.ty})) {
+				return false
+			}
+			break
+		default:
+			return false
+		}
+		// Move the element
+		this.elements[a.x][a.y] = null
+		this.elements[a.tx][a.ty] = e
+		return true
+	}
+
+	// > addElement ({ teamId(id), name, x, y })
+	// 		Generic class that check the type of the element to add,
+	// 		verifies and takes relevant actions.
+	addElement (e) {
+		switch (e.name) { // TODO
+		// Units
+		case "villager":
+			// Check if possible
+			//	- Has the player enough resources to purchase it ?
+			//	- Is the terrain free of obstacles ?
+			if (!this.hasEnough(e.id, "villager") &&
+				!mapUtils.isAreaClear(e.x, e.y, 1, 1, this.terrain, this.elements)) {
+				return false
+			}
+			// Add the element
 			this.elements[e.x][e.y] = new Sawmill(this.teams[e.id], e.x, e.y)
+			break
+		case "knight":
+			// Check if possible
+			//	- Has the player enough resources to purchase it ?
+			//	- Is the terrain free of obstacles ?
+			//	- Is this position next to a barrack ?
+			if (!this.hasEnough(e.id, "knight") &&
+				!mapUtils.isAreaClear(e.x, e.y, 1, 1, this.terrain, this.elements) &&
+				!mapUtils.isNearBarracks(this.teams[e.id], e.x, e.y)) {
+				return false
+			}
+			// Add the element
+			this.elements[e.x][e.y] = new Knight(this.teams[e.id], e.x, e.y)
+			break
+		// Buildings
+		case "sawmill":
+			// Check if possible
+			//	- Has the player enough resources to purchase it ?
+			//	- Is the terrain free of obstacles ?
+			if (!this.hasEnough(e.id, "sawmill") &&
+				!mapUtils.isAreaClear(e.x, e.y, 2, 2, this.terrain, this.elements)) {
+				return false
+			}
+			// Add the element
+			this.elements[e.x][e.y] = new Sawmill(this.teams[e.id], e.x, e.y)
+			break
+		case "barracks":
+			//
 			break
 		default:
 			return false
@@ -98,7 +157,7 @@ module.exports = class Core {
 	}
 
 	// > hasEnough (id, name)
-	// 		Checks if the specified player has the required amount to purchase an item
+	// 		Checks if the specified player has the required amount to purchase an item.
 	hasEnough (id, name) {
 		return (this.teams[id].resources.wood >= config.cost.sawmill.wood &&
 		this.teams[id].resources.glory >= config.cost[name].glory)
