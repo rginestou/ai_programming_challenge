@@ -13,14 +13,5 @@
 
 	"gameConst": {
 		"gloryPoints": 5
-	},
-
-	"cost": {
-		"villager": { "wood": 10, "glory": 0 },
-		"knight": { "wood": 50, "glory": 0 },
-		"archer": { "wood": 50, "glory": 20 },
-
-		"sawmill": { "wood": 80, "glory": 0 },
-		"barracks": { "wood": 150, "glory": 0 }
 	}
 }

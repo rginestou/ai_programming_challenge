@@ -1,0 +1,23 @@
+{
+	"villager": {
+		"cost": { "wood": 30, "glory": 0 }
+
+	},
+
+	"knight": {
+		"cost": { "wood": 60, "glory": 0 }
+	},
+
+	"archer": {
+		"cost": { "wood": 50, "glory": 10 }
+	},
+
+
+	"barrack": {
+		"cost": { "wood": 160, "glory": 0 }
+	},
+
+	"sawmill": {
+		"cost": { "wood": 80, "glory": 0 }
+	}
+}

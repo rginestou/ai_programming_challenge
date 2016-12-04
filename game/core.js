@@ -1,6 +1,7 @@
 const generateMap = require('./utils/mapGenerator')
 const mapUtils = require('./utils/map')
 const config = require('./config')
+const settings = require('./settings')
 const Team = require('./team')
 const Villager = require('./element/villager')
 const Sawmill = require('./element/sawmill')
@@ -42,22 +43,25 @@ module.exports = class Core {
 		}
 	}
 
-	// > doAction (playerId, { type, params = { ... } })
+	// > doAction (teamId(id), { type, params = { ... } })
 	//		All actions done by AI will be passed here,
 	// 		with the corresponding params.
-	doAction (playerId, action) {
+	//		Return if the action was a success
+	doAction (id, action) {
 		switch (action.type) {
 		case 'move':
-			this.state.values[playerId] = action.params.value
+			// params = { x, y, tx, ty }
+			return this.moveElement({id: id, params})
 			break
 		case 'shoot':
-			this.state.values[playerId] = action.params.value
+			// params = { x, y, tx, ty }
+			return this.shootElement({id: id, params})
 			break
 		case 'harvest':
-			this.state.values[playerId] = action.params.value
+			this.state.values[id] = action.params.value
 			break
 		case 'build':
-			this.state.values[playerId] = action.params.value
+			this.state.values[id] = action.params.value
 			break
 		default:
 			console.log('Unknown action:', action)
@@ -156,11 +160,18 @@ module.exports = class Core {
 		return true
 	}
 
+	// > shootElement ({ teamId(id), x, y, tx, ty })
+	//		Generic class that check the type of the element that shoot,
+	//		as well as the victim's, then decrease its HP.
+	shootElement (a) {
+		
+	}
+
 	// > hasEnough (id, name)
 	// 		Checks if the specified player has the required amount to purchase an item.
 	hasEnough (id, name) {
-		return (this.teams[id].resources.wood >= config.cost.sawmill.wood &&
-		this.teams[id].resources.glory >= config.cost[name].glory)
+		return (this.teams[id].resources.wood >= settings[name].cost.wood &&
+		this.teams[id].resources.glory >= settings[name].cost.glory)
 	}
 
 }
