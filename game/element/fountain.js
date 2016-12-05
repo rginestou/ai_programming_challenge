@@ -16,8 +16,8 @@ module.exports = class Fountain extends Resource {
 	}
 
 	// > setTeam
-	//	Change the current team controling the fountain
-	//	and the color of the latter by the way
+	//		Change the current team controling the fountain
+	//		and the color of the latter by the way
 	setTeam (newTeam) {
 		this.team = newTeam
 		let shift = 0
@@ -30,7 +30,7 @@ module.exports = class Fountain extends Resource {
 	}
 
 	// > addPoints
-	//	if a team is in control, add its points
+	//		If a team is in control, add its points
 	addPoints () {
 		this.team.resource.glory += config.gameConst.gloryPoints
 	}

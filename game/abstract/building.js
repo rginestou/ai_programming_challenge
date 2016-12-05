@@ -22,7 +22,7 @@ module.exports = class Building extends Element {
 
 	// > jsonify ()
 	//		return an object that can be given
-	// to the AI or the renderer
+	//		to the AI or the renderer
 	jsonify () {
 		return Object.assign(
 			super.jsonify(),

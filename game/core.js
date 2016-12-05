@@ -4,7 +4,10 @@ const config = require('./config')
 const settings = require('./settings')
 const Team = require('./team')
 const Villager = require('./element/villager')
+const Knight = require('./element/knight')
+const Archer = require('./element/archer')
 const Sawmill = require('./element/sawmill')
+const Barrack = require('./element/barrack')
 
 // ====================================================
 //  > Core
@@ -29,7 +32,14 @@ module.exports = class Core {
 		this.elements = elements // all game elements
 
 		// Testing purposes TODO
-		this.addElement({id:0, name:"sawmill", x:10, y:0})
+		this.teams[0].resources.wood = 1000
+		this.teams[1].resources.wood = 1000
+		this.addElement({id:0, name:"barrack", x:0, y:0})
+		this.addElement({id:0, name:"knight", x:2, y:0})
+
+		this.addElement({id:1, name:"barrack", x:12, y:0})
+		this.addElement({id:1, name:"knight", x:11, y:1})
+		// this.shootElement({ id:1, x:11, y:1, tx:10, ty:0 })
 	}
 
 	// > getState ()
@@ -112,15 +122,20 @@ module.exports = class Core {
 	// > addElement ({ teamId(id), name, x, y })
 	// 		Generic class that check the type of the element to add,
 	// 		verifies and takes relevant actions.
-	addElement (e) {
-		switch (e.name) { // TODO
+	addElement (e) { // TODO add square, add to team
+		// Has the ressources to add the element ?
+		if (!this.hasEnoughRessources(e.id, e.name)) {
+			console.log("Not enough resources")
+			return false
+		}
+
+		switch (e.name) {
 		// Units
 		case "villager":
 			// Check if possible
-			//	- Has the player enough resources to purchase it ?
 			//	- Is the terrain free of obstacles ?
-			if (!this.hasEnough(e.id, "villager") &&
-				!mapUtils.isAreaClear(e.x, e.y, 1, 1, this.terrain, this.elements)) {
+			if (!mapUtils.isAreaClear(e.x, e.y, 1, 1, this.terrain, this.elements)) {
+				console.log("Area not clear");
 				return false
 			}
 			// Add the element
@@ -128,12 +143,11 @@ module.exports = class Core {
 			break
 		case "knight":
 			// Check if possible
-			//	- Has the player enough resources to purchase it ?
 			//	- Is the terrain free of obstacles ?
 			//	- Is this position next to a barrack ?
-			if (!this.hasEnough(e.id, "knight") &&
-				!mapUtils.isAreaClear(e.x, e.y, 1, 1, this.terrain, this.elements) &&
+			if (!mapUtils.isAreaClear(e.x, e.y, 1, 1, this.terrain, this.elements) ||
 				!mapUtils.isNearBarracks(this.teams[e.id], e.x, e.y)) {
+				console.log("Area not clear, or not near barracks");
 				return false
 			}
 			// Add the element
@@ -142,17 +156,23 @@ module.exports = class Core {
 		// Buildings
 		case "sawmill":
 			// Check if possible
-			//	- Has the player enough resources to purchase it ?
 			//	- Is the terrain free of obstacles ?
-			if (!this.hasEnough(e.id, "sawmill") &&
-				!mapUtils.isAreaClear(e.x, e.y, 2, 2, this.terrain, this.elements)) {
+			if (!mapUtils.isAreaClear(e.x, e.y, 2, 2, this.terrain, this.elements)) {
+				console.log("Area not clear");
 				return false
 			}
 			// Add the element
 			this.elements[e.x][e.y] = new Sawmill(this.teams[e.id], e.x, e.y)
 			break
-		case "barracks":
-			//
+		case "barrack":
+			// Check if possible
+			//	- Is the terrain free of obstacles ?
+			if (!mapUtils.isAreaClear(e.x, e.y, 2, 2, this.terrain, this.elements)) {
+				console.log("Area not clear");
+				return false
+			}
+			// Add the element
+			this.elements[e.x][e.y] = new Barrack(this.teams[e.id], e.x, e.y)
 			break
 		default:
 			return false
@@ -163,13 +183,38 @@ module.exports = class Core {
 	// > shootElement ({ teamId(id), x, y, tx, ty })
 	//		Generic class that check the type of the element that shoot,
 	//		as well as the victim's, then decrease its HP.
-	shootElement (a) {
-		
+	shootElement (a) { // TODO
+		let e = this.elements[a.x][a.y]
+		let target = this.elements[a.tx][a.ty]
+		if (e && target) {
+			// Check if the player has the right to shoot
+			if (a.id != e.team.id || a.id == target.team.id) {
+				return false
+			}
+			// Check the shooter's and target's type
+			if (!(e instanceof Knight || e instanceof Archer) ||
+			!(target instanceof Knight || target instanceof Archer)) {
+				return false
+			}
+			target.healthPoint -= e.getPresets().damage
+			if (target.healthPoint <= 0) {
+				// Delete from team
+				let index = this.team[target.team.id].elements.indexOf(target)
+				if (index > -1) {
+					this.team[target.team.id].elements.splice(index, 1)
+				}
+				// Delete from terrain
+				this.elements[a.tx][a.ty] = null
+			}
+			return true
+		}
+		console.log("Shooter or target not defined");
+		return false
 	}
 
 	// > hasEnough (id, name)
 	// 		Checks if the specified player has the required amount to purchase an item.
-	hasEnough (id, name) {
+	hasEnoughRessources (id, name) {
 		return (this.teams[id].resources.wood >= settings[name].cost.wood &&
 		this.teams[id].resources.glory >= settings[name].cost.glory)
 	}

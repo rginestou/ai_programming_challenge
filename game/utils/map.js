@@ -32,8 +32,7 @@ module.exports = {
 	// 		Return if the given position is right next to a barrack
 	isNearBarracks (team, x, y) {
 		let pos, size
-
-		for (let i = 0; i < team.elements.size(); i++) {
+		for (let i = 0; i < team.elements.length; i++) {
 			if (team.elements[i] instanceof Barrack) {
 				// Look around
 				pos = team.elements[i].pos

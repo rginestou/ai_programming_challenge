@@ -1,15 +1,22 @@
 {
-	"villager": {
-		"cost": { "wood": 30, "glory": 0 }
+	"none": {},
 
+	"villager": {
+		"cost": { "wood": 30, "glory": 0 },
+		"damage": 0,
+		"healthPoint": 30
 	},
 
 	"knight": {
-		"cost": { "wood": 60, "glory": 0 }
+		"cost": { "wood": 60, "glory": 0 },
+		"damage": 50,
+		"healthPoint": 90
 	},
 
 	"archer": {
-		"cost": { "wood": 50, "glory": 10 }
+		"cost": { "wood": 50, "glory": 10 },
+		"damage": 40,
+		"healthPoint": 50
 	},
 
 

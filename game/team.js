@@ -15,7 +15,7 @@ module.exports = class Team {
 
 	// > jsonify ()
 	//		return an object that can be given
-	// to the AI or the renderer
+	//		to the AI or the renderer
 	jsonify () {
 		return {
 			id: this.id,

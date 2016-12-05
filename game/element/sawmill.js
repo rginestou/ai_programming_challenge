@@ -12,6 +12,7 @@ module.exports = class Sawmill extends Building {
 		super(team, x, y)
 		this.size = 2
 		this.sprite = { x: 0, y: 1 }
+		this.name = "sawmill"
 	}
 
 }

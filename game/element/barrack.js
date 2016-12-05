@@ -5,12 +5,14 @@ const Building = require('../abstract/building')
 // ----------------------------------------------------
 // 	Class for barracks
 // ====================================================
-module.exports = class Barracks extends Building {
+module.exports = class Barrack extends Building {
 
 	// > constructor (Team team, x, y)
 	constructor (team, x, y) {
 		super(team, x, y)
-		this.sprite = { x: 1, y: 0 }
+		this.size = 2
+		this.sprite = { x: 2 * (1 + team.id), y: 1 }
+		this.name = "barrack"
 	}
 
 }

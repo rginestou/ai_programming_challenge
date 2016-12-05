@@ -11,16 +11,12 @@ module.exports = class Villager extends Unit {
 	constructor (team, x, y) {
 		super(team, x, y)
 		this.load = 0 // What the villager carries
-		this.sprite = { x: 1, y: 2 }
-		// Read data
-		// this.name = data[id].name
-		// this.maxHealthPoint = data[id].life
-		// this.healthPoint = this.maxHealthPoint
-		// this.walkRange = data[id].walk_range
+		this.sprite = { x: 1 + 4 * team.id, y: 2 }
+		this.name = "villager"
 	}
 
 	// > harvest
-	// 	Update the villager's load of a certain amount
+	// 		Update the villager's load of a certain amount
 	harvest(amount) {
 		this.load += amount
 
@@ -28,8 +24,8 @@ module.exports = class Villager extends Unit {
 	}
 
 	// > unload
-	// 	Allows the villager to unload what it carries.
-	// 	Return the unloaded amount
+	// 		Allows the villager to unload what it carries.
+	// 		Return the unloaded amount
 	unload() {
 		let t = this.load
 		this.load = 0

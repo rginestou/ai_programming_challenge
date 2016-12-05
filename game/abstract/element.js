@@ -1,3 +1,5 @@
+const settings = require('../settings')
+
 // ====================================================
 //  > Element
 // ----------------------------------------------------
@@ -12,17 +14,13 @@ module.exports = class Element {
 		this.pos = {x : x, y : y} // Coord. on the map
 		this.size = 1 // Size of the slot occupied (1x1, 2x2, etc.)
 		this.healthPoint = 10 // Health points of the element
-		this.maxHealthPoint = 10 // Maximum HP this element can ever have
 		this.sprite = { x: 0, y: 0 } // position (x, y) of the sprite on the spriteset (1 = 32px)
-
-		// Static variables TODO
-		this.attackFactors = {}
-		this.defenseFactors = {}
+		this.name = "none"
 	}
 
 	// > jsonify ()
 	//		return an object that can be given
-	//to the AI or the renderer
+	//		to the AI or the renderer
 	jsonify () {
 		return {
 			type: 'none',
@@ -32,6 +30,12 @@ module.exports = class Element {
 			team_id: this.team ? this.team.id : -1,
 			sprite: this.sprite
 		}
+	}
+
+	// > getPresets ()
+	//		Return what can be found in settings.json for the corresponding class
+	getPresets () {
+		return settings[this.name]
 	}
 
 }

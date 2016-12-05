@@ -1,6 +1,6 @@
 {
 	"mapGen": {
-		"mapSize": 50,
+		"mapSize": 30,
 		"fountainRadius": 2,
 		"baseZoomLevel": 80.0,
 		"detailZoomLevel": 60.0,
